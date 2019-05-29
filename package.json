@@ -1,0 +1,35 @@
+{
+  "name": "webpack-typescript-seed",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./src/app/app.ts",
+  "scripts": {
+    "start": "SET NODE_ENV=development && webpack-dev-server --config webpack.dev.js --open",
+    "buildDev": "SET NODE_ENV=development && webpack --config webpack.dev.js",
+    "buildProd": "SET NODE_ENV=production && webpack --config webpack.prod.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/es6-shim": "^0.31.39",
+    "@types/node": "^12.0.3",
+    "autoprefixer": "^9.5.1",
+    "clean-webpack-plugin": "^2.0.2",
+    "css-loader": "^2.1.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
+    "postcss-clean": "^1.1.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^6.0.1",
+    "typescript": "^3.4.5",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1",
+    "webpack-merge": "^4.2.1",
+    "webpack-notifier": "^1.7.0"
+  }
+}
