@@ -6,7 +6,7 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 
 module.exports = {
   entry: {
-    app: './src/app/app.ts'
+    ['scroll-date']: './src/app/app.ts'
   },
   /* loaders */
   module: {

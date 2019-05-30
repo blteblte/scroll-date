@@ -6,8 +6,27 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Webpack & Typescript Seed</title>
 </head>
-<body>
-  <h1>Hello World</h1>
-  <p>Webpack & Typescript Seed</p>
+<body style="direction: rtl;">
+
+  <style>
+    input { padding: 16px; outline: none; }
+    .container {
+      text-align: center;
+      margin-top: 100px;
+    }
+  </style>
+
+  <div class="container">
+
+      <label for="from-date">עזיבה:</label>
+      <input type="text" id="from-date" />
+
+      <label for="to-date">הגעה:</label>
+      <input type="text" id="to-date" />
+
+  </div>
+
+  <!-- for RTL body should have: direction:rtl; -->
+  <scroll-date from="#from-date" to="#to-date" rtl="true" lang="he"></scroll-date>
 </body>
 </html>

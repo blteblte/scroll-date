@@ -1,0 +1,299 @@
+@import '../scss/reset';
+
+$z-index-date-picker: 1;
+$z-index-date-picker-title: 2;
+
+.scroll-date {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
+    padding: 0 0px 0;
+    box-sizing: border-box;
+    top: 0px;
+    height: 100%;
+    bottom: 130px;
+    padding-top: 60px;
+    left: 0;
+    max-width: 600px;
+    background: #fff;
+    opacity: 0;
+    z-index: -1;
+    transition: all .3s;
+    right: 0;
+    transform: translateX(-100%);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    &.rtl {
+        right: 0;
+        transform: translateX(100%);
+    }
+
+    &.visible {
+        transform: none;
+        opacity: 1;
+        z-index: $z-index-date-picker;
+        /*display: block;*/
+    }
+
+    &.single-date {
+        .scroll-date__ui--dates {
+
+            &--from {
+                width: 100%;
+            }
+
+            &--to {
+                display: none;
+            }
+        }
+    }
+
+    &__overflow {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .2);
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: .3s all .3s;
+        /*z-index: -1;*/
+    }
+
+    &.visible .scroll-date__overflow {
+        opacity: 1;
+        /*z-index: $z-index-date-picker - 1;*/
+    }
+
+    &__header {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        z-index: $z-index-date-picker-title;
+        color: #e6e6e8;
+        width: 100%;
+        text-align: center;
+        background-color: rgba(0, 0, 0, .9);
+
+
+        &--title {
+            font-size: 20px;
+            font-weight: normal;
+            margin: 17px 0 16px;
+        }
+
+        &--close {
+            position: absolute;
+            top: 18px;
+            right: 19px;
+            font-size: 19px;
+            font-family: icons;
+            cursor: pointer;
+
+            &:before {
+                content: "×";
+            }
+        }
+    }
+
+    &.rtl .scroll-date__header--close {
+        left: 19px;
+        right: auto;
+    }
+
+    &__container {
+        position: absolute;
+        top: 53px;
+        bottom: 130px;
+        overflow: auto;
+        width: 100%;
+    }
+
+    &__ui {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #f6f7f9;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #e3e3e3;
+        height: 130px;
+        box-sizing: border-box;
+
+        &--dates {
+            display: table;
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #101010;
+
+            > div {
+                float: left;
+                width: 50%;
+                position: relative;
+                padding: 12px 0;
+            }
+
+            &--to {
+                &:before {
+                    content: "";
+                    width: 2px;
+                    position: absolute;
+                    height: 100%;
+                    left: -1px;
+                    top: 0;
+                    background: #d7d8dc;
+                }
+            }
+        }
+
+        &--submit-container {
+            padding-top: 8px;
+            overflow-x: hidden;
+
+            &__submit {
+                background: #488af8;
+                color: #fff;
+                text-transform: uppercase;
+                text-align: center;
+                font-size: 16px;
+                line-height: 18px;
+                font-weight: 600;
+                display: block;
+                padding: 15px;
+                cursor: pointer;
+                transition: transform .15s;
+                transform: none;
+
+                &.flash {
+                    transform: scale(.96, .96);
+                }
+            }
+        }
+    }
+
+    &.rtl .scroll-date__ui--dates--to:before {
+        right: 1px;
+    }
+
+
+    .calendar {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        background-color: #fff;
+
+        tr {
+            border-bottom: 1px solid #ddd;
+
+            &:last-child {
+                border: none;
+            }
+        }
+
+        .currentmonth {
+            border-bottom: none;
+
+            th {
+                padding: 10px 5px 5px;
+            }
+        }
+
+
+        th {
+            font-size: 16px;
+            font-weight: 600;
+            background: #f6f7f9;
+            color: #333;
+        }
+
+        td {
+            font-size: 14px;
+            padding: 3px 0;
+            position: relative;
+            background-color: #fff;
+            user-select: none;
+
+            &:not(.invalid) {
+                cursor: pointer;
+            }
+
+            div {
+                padding: 15px 12px;
+            }
+
+            &.invalid {
+                color: #c2c1c6;
+            }
+
+            &.connect {
+                color: #0184df;
+
+                div {
+                    background: #fff5b7;
+                }
+            }
+
+            &.selected {
+                div {
+                    background: #f79d11;
+                    color: #fff;
+                    border-radius: 8px;
+                    position: relative;
+                }
+            }
+
+            &.first, &.second {
+                &.connect:before {
+                    content: "";
+                    position: absolute;
+                    top: 3px;
+                    bottom: 3px;
+                    width: 10px;
+                    background: #fff5b7;
+                }
+            }
+
+            &.first {
+                &.connect:before {
+                    right: 0;
+                }
+            }
+
+            &.second {
+                &.connect:before {
+                    left: 0;
+                }
+            }
+
+            &.currentday {
+                div {
+                    border: 1px solid #f89d11;
+                    border-radius: 8px;
+                }
+            }
+        }
+
+        .weekdays {
+            background: #f6f7f9;
+            color: #666;
+
+            td {
+                padding: 5px 5px 10px;
+            }
+        }
+    }
+
+    &.rtl .calendar td.first.connect:before {
+        left: 0;
+        right: auto;
+    }
+
+    &.rtl .calendar td.second.connect:before {
+        right: 0;
+        left: auto;
+    }
+}
