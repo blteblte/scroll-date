@@ -286,7 +286,7 @@ export class ScrollDateBase {
         }
         if (this._dom.selectedMonthRef) {
             const monthRefOffset = this._dom.selectedMonthRef.offsetTop
-            this._dom.datepickerContainer.scrollTo(0, monthRefOffset)
+            this._dom.datepickerContainer.scrollTop = monthRefOffset
 
             if (this.options.listMode) {
                 this.SetListDatePageByDate(this._state.date1)

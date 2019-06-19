@@ -94,7 +94,7 @@ $z-index-date-picker-title: 10001;
                 animation: scrollDateListViewPageAnimation .15s;
 
                 &.visible {
-                    display: inline-flex;
+                    display: table;
                 }
                 td > div {
                     padding: 16px;
