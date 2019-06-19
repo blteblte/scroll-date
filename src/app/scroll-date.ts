@@ -85,7 +85,7 @@ export class ScrollDate {
         date2: null,
         cachedDate2: null,
         animationBussy: false,
-        listModePageIndex: 0
+        listModePageIndex: null
     }
 
     public constructor(
