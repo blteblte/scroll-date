@@ -77,3 +77,7 @@ export function isDateObjectValid(d) {
         return false
       }
 }
+
+export function isFunction(functionToCheck) {
+return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}

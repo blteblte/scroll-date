@@ -14,8 +14,14 @@ import { IDateItem } from './models/IDateItem';
 import { Targets } from './models/Targets';
 import { Dom } from './models/Dom';
 import { State } from './models/State';
+import { EventType } from './models/EventType';
+import { EventListenerType } from './models/EventListenerType';
+import { ScrollDateEvent } from './models/ScrollDateEvent';
+import { isFunction } from 'util';
 
 export class ScrollDateBase {
+
+    private events: ScrollDateEvent[]
 
     private options: Options
 
@@ -60,6 +66,8 @@ export class ScrollDateBase {
         protected host: HTMLElement
         , userOptions: Options = ({} as any)
     ) {
+        this.events = []
+
         /* set default */
         const scrollDateOptions = { ...defaultOptions }
 
@@ -155,6 +163,7 @@ export class ScrollDateBase {
         } else {
             this.UI_selectDate(dt, 'first')
             this._dom.uiFromDate.innerHTML = getDatePickerPlaceholderDate(dt.date)
+            this.triggerEvent('onfirstselected', dt.date)
         }
         this._firstSelectedDate = dt
         this._dom.selectedMonthRef = dt.ref.parentElement/*tr*/.parentElement/*tbody*/.parentElement/*table*/
@@ -179,6 +188,7 @@ export class ScrollDateBase {
                         && this._dom.datepickerSubmit.classList.remove('flash')
                 }, 150)
             }
+            this.triggerEvent('onsecondselected', dt.date)
         }
         this._secondSelectedDate = dt
         this.updateCalendarConnectDates()
@@ -478,6 +488,7 @@ export class ScrollDateBase {
         this._state.date1 = this.firstSelectedDate.date
         this._state.date2 = (this.secondSelectedDate || this.firstSelectedDate).date
         this.apply(this._state.date1, this._state.date2)
+        this.triggerEvent('onchange', this._state.date1, this._state.date2)
         this.Hide()
     }
 
@@ -708,4 +719,23 @@ export class ScrollDateBase {
         })
     }
 
+    protected AddEventListener(eventType: EventType, eventListener: EventListenerType) {
+        this.events.push({ eventType, eventListener })
+    }
+
+    protected RemoveEventListener(eventType: EventType, eventListener: EventListenerType) {
+        const e = this.events.find((x) => x.eventListener === eventListener && x.eventType === eventType)
+        const index = this.events.indexOf(e)
+        if (index > -1) {
+            this.events.splice(index, 1)
+        }
+    }
+
+    private triggerEvent(eventType: EventType, date1: Date, date2: Date = undefined) {
+        const eventsToFire = this.events.filter((e) => e.eventType === eventType)
+        eventsToFire.forEach((e) => {
+            if (isFunction)
+                e.eventListener(date1, date2)
+        })
+    }
 }

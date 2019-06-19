@@ -3,6 +3,8 @@ import './scroll-date.scss';
 
 import { ScrollDateBase } from './scroll-date-base';
 import { Options } from './options';
+import { EventType } from './models/EventType';
+import { EventListenerType } from './models/EventListenerType';
 
 /**
  * Scrollable datepicker
@@ -123,5 +125,23 @@ export class ScrollDate extends ScrollDateBase {
      */
     public SetListDatePageByIndex(index: number) {
         super.SetListDatePageByIndex(index)
+    }
+
+    /**
+     * Add event listener to ScrollDate events
+     * @param {string} eventType event name
+     * @param eventListener event listener delegage reference
+     */
+    protected AddEventListener(eventType: EventType, eventListener: EventListenerType) {
+        super.AddEventListener(eventType, eventListener)
+    }
+
+    /**
+     * Remove event listener from ScrollDate events
+     * @param {string} eventType event name
+     * @param eventListener event listener delegage reference
+     */
+    public RemoveEventListener(eventType: EventType, eventListener: EventListenerType) {
+        super.RemoveEventListener(eventType, eventListener)
     }
 }
