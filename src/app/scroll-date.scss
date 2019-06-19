@@ -38,6 +38,10 @@ $z-index-date-picker-title: 10001;
         padding-top:0px;
         bottom:unset;
 
+        .scroll-date__header {
+            display:none;
+        }
+
         .scroll-date__container {
             position: relative;
             overflow: auto;
@@ -77,6 +81,14 @@ $z-index-date-picker-title: 10001;
 
     &.out {
         display: none;
+    }
+
+    &.rtl {
+        transform: translateX(100%);
+    }
+
+    &.rtl.list-mode {
+        transform: none;
     }
 
     &.visible {
@@ -126,8 +138,6 @@ $z-index-date-picker-title: 10001;
         width: 100%;
         text-align: center;
         background-color: rgba(0, 0, 0, .9);
-        display:none;
-
 
         &--title {
             font-size: 20px;
