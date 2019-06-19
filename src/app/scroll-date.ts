@@ -130,7 +130,7 @@ export class ScrollDate {
         this._state.zeroDate.setHours(0, 0, 0, 0)
 
         /* dafault date values */
-        this._state.date1 = this.addDays(this._state.zeroDate, 3)
+        this._state.date1 = this.addDays(this._state.zeroDate, 0)
         this._state.date2 = this.addDays(this._state.zeroDate, 7)
 
         /* set startdate */
@@ -341,7 +341,7 @@ export class ScrollDate {
         listModelControllsContainer.appendChild(prevButton)
         listModelControllsContainer.appendChild(nextButton)
 
-        this._dom.datepickerWrapper.appendChild(listModelControllsContainer)
+        this._dom.datepickerContainer.appendChild(listModelControllsContainer)
 
         this.setListDatePageByDate(this._state.date1)
     }

@@ -2,20 +2,24 @@ $z-index-date-picker: 10000;
 $z-index-date-picker-title: 10001;
 
 .scroll-date {
-    font-family: 'Rubik';
-    position: absolute;
-    top:60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
     padding: 0 0px 0;
     box-sizing: border-box;
+    top: 0px;
     height: 100%;
-    width: 100%;
+    bottom: 130px;
+    padding-top: 60px;
+    left: 0;
+    max-width: 600px;
     background: #fff;
     opacity: 0;
     z-index: -1;
     transition: all .3s;
-    transform: translateY(-100%);
-    overflow: hidden;
-
+    right: 0;
+    transform: translateX(-100%);
+    overflow-x: hidden;
+    overflow-y: auto;
     &.auto-submit {
         .scroll-date__ui {
             display: none;
@@ -23,7 +27,33 @@ $z-index-date-picker-title: 10001;
     }
 
     &.list-mode {
+        font-family: 'Rubik';
+        position: absolute;
+        top:140px;
+        height: auto;
+        width: 100%;
+        max-width:1200px;
+        transform: none;
+        overflow: hidden;
+        padding-top:0px;
+        bottom:unset;
+
+        .scroll-date__container {
+            position: relative;
+            overflow: auto;
+            width: 100%;
+            background-color:#fff;
+            top: unset;
+            bottom: unset;
+        }
+
         .calendar {
+            width: 40%;
+            margin:0 60px;
+            text-align: center;
+            border-collapse: collapse;
+            background-color: #fff;
+            float:left;
             display: none;
             &.visible {
                 display: table;
@@ -33,10 +63,13 @@ $z-index-date-picker-title: 10001;
 
     &__list-mode-controls {
         .prev {
-
+            border:20px solid red;
+            width: 20px;height:20px;
         }
 
         .next {
+            border:20px solid red;
+            width: 20px;height:20px;
 
         }
     }
@@ -75,7 +108,6 @@ $z-index-date-picker-title: 10001;
         left: 0;
         opacity: 0;
         transition: .3s all .3s;
-        display:none;
         /*z-index: -1;*/
     }
 
@@ -201,12 +233,10 @@ $z-index-date-picker-title: 10001;
 
 
     .calendar {
-        width: 40%;
-        margin:0 60px;
+        width: 100%;
         text-align: center;
         border-collapse: collapse;
         background-color: #fff;
-        float:left;
 
         tr {
             &:last-child {
@@ -304,7 +334,7 @@ $z-index-date-picker-title: 10001;
         }
     }
 
-    &.rtl .calendar {
+    &.rtl.list-mode .calendar {
         float:right;
     }
 
