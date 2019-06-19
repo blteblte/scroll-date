@@ -100,7 +100,8 @@ export class ScrollDateBase {
         this._state.zeroDate.setHours(0, 0, 0, 0)
 
         /* set startdate */
-        this._state.startDate = this._state.startDate
+        this._state.startDate = this.options.startDate
+        this._state.startDate.setHours(0, 0, 0, 0)
 
         /* set starting dates */
         let date1 = this.addDays(this._state.zeroDate, 0)
@@ -220,7 +221,6 @@ export class ScrollDateBase {
     }
 
     protected SetFromDate(d: Date) {
-        //console.log('set from date', d.getDate())
         d.setHours(0, 0, 0, 0)
         this._state.date1 = d
         this.updateCalendarSelectFirstDate(d)
@@ -229,7 +229,6 @@ export class ScrollDateBase {
     }
 
     protected SetToDate(d: Date) {
-        //console.log('set to date', d.getDate())
         d.setHours(0, 0, 0, 0)
         this._state.date2 = d
         this.updateCalendarSelectSecondDate(d)
@@ -618,10 +617,12 @@ export class ScrollDateBase {
     /**
      * Draw/remove 'connect' class between selected dates
      */
-    private updateCalendarConnectDates() {
+    private updateCalendarConnectDates(toDateOverride: IDateItem = null) {
+
         let isFoundFirst = false
         let isFoundSecond = false
-        if (!this.secondSelectedDate) {
+
+        if (!this.secondSelectedDate && toDateOverride === null) {
             this._dom.calendarDates.forEach((dt) => {
                 if (dt.ref.classList.contains('connect')) {
                     dt.ref.classList.remove('connect')
@@ -638,7 +639,11 @@ export class ScrollDateBase {
                     dt.ref.classList.contains('connect') && dt.ref.classList.remove('connect')
                 }
                 if (!isFoundSecond) {
-                    isFoundSecond = dt.ref.classList.contains('second')
+                    if (toDateOverride === null) {
+                        isFoundSecond = dt.ref.classList.contains('second')
+                    } else {
+                        isFoundSecond = isDatesEqual(this.addDays(toDateOverride.date, -1), dt.date)
+                    }
                 }
             })
         }
@@ -679,6 +684,15 @@ export class ScrollDateBase {
                 }
             })
 
+            dt.ref.addEventListener('mouseenter', (e) => {
+                if (this._state.selectingCount === 1 && dt.date > this.firstSelectedDate.date)
+                    this.updateCalendarConnectDates(dt)
+            })
+
+            dt.ref.addEventListener('mouseleave', (e) => {
+                if (this._state.selectingCount === 1 && dt.date > this.firstSelectedDate.date)
+                    this.updateCalendarConnectDates()
+            })
         })
     }
 
