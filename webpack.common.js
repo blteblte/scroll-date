@@ -39,7 +39,7 @@ module.exports = {
       template: './src/index.html'
     }),
     new MiniCssExtractPlugin({
-        filename: '[name].css',
+        filename: '[name].min.css',
         chunkFilename: 'chunks/[id].css'
     }),
     new WebpackNotifierPlugin({
@@ -47,7 +47,7 @@ module.exports = {
     })
   ],
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].min.js',
     path: path.resolve(__dirname, 'dist')
   }
 };
