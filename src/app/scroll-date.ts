@@ -47,7 +47,6 @@ interface State {
     date1: Date
     date2: Date
     cachedDate2: Date
-    animationBussy: boolean
     listModePageIndex: number
 }
 
@@ -84,7 +83,6 @@ export class ScrollDate {
         date1: null,
         date2: null,
         cachedDate2: null,
-        animationBussy: false,
         listModePageIndex: null
     }
 
