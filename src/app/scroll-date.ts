@@ -374,8 +374,6 @@ export class ScrollDate {
             firstIndex = maxIndex - 1
         }
 
-        if (this._state.listModePageIndex === firstIndex) { return }
-
         this._state.listModePageIndex = firstIndex
 
         if (firstIndex === 0) {
