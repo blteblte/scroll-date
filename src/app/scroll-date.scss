@@ -1,6 +1,11 @@
 $z-index-date-picker: 10000;
 $z-index-date-picker-title: 10001;
 
+@keyframes scrollDateListViewPageAnimation {
+    from { opacity: 0;  }
+    to { opacity: 1; }
+}
+
 .scroll-date {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: fixed;
@@ -29,81 +34,110 @@ $z-index-date-picker-title: 10001;
     &.list-mode {
         font-family: 'Rubik';
         position: absolute;
-        top:140px;
+        top: 140px - 55px/* if title hidden*/;
         height: auto;
         width: 100%;
-        max-width:1200px;
+        max-width: 1200px;
+        min-width: 800px;
         transform: none;
         overflow: hidden;
-        padding-top:0px;
-        bottom:unset;
+        padding-top: 0px;
+        bottom: unset;
+        margin-left: auto;
+        margin-right: auto;
+
+        .scroll-date__header {
+            display: none;
+        }
 
         .scroll-date__ui {
-            position:relative;
-            padding:0;
-            background:#fff;
-            border:0px;
-            height:100%;
-            padding-bottom:10px;
+            position: relative;
+            padding: 0;
+            background: #fff;
+            border: 0px;
+            height: 100%;
+            padding-bottom: 10px;
             &--dates {
-                display:none;
+                display: none;
             }
             &--submit-container {
                 padding-top: 0;
                 &__submit {
-                    display:inline-block;
-                    background-color:#07a2ba;
+                    display: inline-block;
+                    background-color: #07a2ba;
                 }
             }
         }
 
         .scroll-date__container {
+            box-sizing: border-box;
             position: relative;
-            overflow: auto;
+            display: flex;
+            justify-content: space-around;
+            overflow: hidden;
             width: 100%;
             background-color:#fff;
             bottom: unset;
-            top:unset;
-            margin-top:50px;
+            top: unset;
+            margin-top: 50px;
+            padding: 14px 4%;
 
             .calendar {
-                width: 30%;
-                margin:0 120px;
+                width: auto;
                 text-align: center;
                 border-collapse: collapse;
                 background-color: #fff;
-                float:left;
+                float: left;
                 display: none;
+                margin: 0 10px;
+                animation: scrollDateListViewPageAnimation .15s;
+
                 &.visible {
-                    display: block;
+                    display: inline-flex;
+                }
+                td > div {
+                    padding: 16px;
                 }
             }
 
-
-
             .scroll-date__list-mode-controls {
-                position:relative;
-                width:100%;
-                height:30px;
+                position: absolute;
+                width: 100%;
+                height: 0px;
+                top: 180px;
 
                 .prev, .next {
-                    position:absolute;
-                    cursor:pointer;
-                    font-size:30px;
-                    top:180px;
+                    cursor: pointer;
+                    font-size: 30px;
+                    margin: 0 14px;
                     &.disabled {
-                        display:none;
+                        display: none;
                     }
                 }
                 .prev {
-                    right:3%;
+                    float: left;
                     &:before {content: "<";}
                 }
                 .next {
-                    left:3%;
+                    float: right;
                     &:before {content: ">";}
                 }
             }
+
+            .scroll-date__submit-container {
+                text-align: center;
+            }
+        }
+    }
+
+    &.rtl.list-mode .scroll-date__list-mode-controls {
+        .prev {
+            float: right;
+            &:before {content: "<";}
+        }
+        .next {
+            float: left;
+            &:before {content: ">";}
         }
     }
 
@@ -309,9 +343,11 @@ $z-index-date-picker-title: 10001;
 
             div {
                 padding: 15px 12px;
+                transition: all .14s;
                 &:hover {
                     background:#07a2ba;
                     color: #fff;
+                    transition: none;
                 }
             }
 

@@ -6,18 +6,26 @@
  * - not production ready
  */
 
+import {
+      camelCaseToDash
+    , getDatePickerPlaceholderDate
+    , parseDate
+    , isDatesEqual
+    , getDateISOFormat
+    , isDateObjectValid
+} from './helpers';
 import { Options, defaultOptions, parseOptions } from './options';
-import { camelCaseToDash, getDatePickerPlaceholderDate, parseDate, isDatesEqual, getDateISOFormat, isDateObjectValid } from './helpers';
-import { generateCalendarHTML } from './lib/generate';
-import { translations } from './translations';
-import { IDateItem } from './models/IDateItem';
-import { Targets } from './models/Targets';
-import { Dom } from './models/Dom';
-import { State } from './models/State';
-import { EventType } from './models/EventType';
 import { EventListenerType } from './models/EventListenerType';
 import { ScrollDateEvent } from './models/ScrollDateEvent';
+import { generateCalendarHTML } from './lib/generate';
+import { EventType } from './models/EventType';
+import { IDateItem } from './models/IDateItem';
+import { translations } from './translations';
+import { Targets } from './models/Targets';
+import { State } from './models/State';
+import { Dom } from './models/Dom';
 import { isFunction } from 'util';
+
 
 export class ScrollDateBase {
 
