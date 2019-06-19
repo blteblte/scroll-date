@@ -353,6 +353,14 @@ $z-index-date-picker-title: 10001;
             }
 
             &.invalid {
+
+                div:hover {
+                    background:#fff;
+                    color: #c2c1c6;
+                }
+            }
+
+            &.invalid {
                 color: #c2c1c6;
                 &:hover {
                     background:none;
