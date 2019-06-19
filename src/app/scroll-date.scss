@@ -55,7 +55,6 @@ $z-index-date-picker-title: 10001;
                     background-color:#07a2ba;
                 }
             }
-
         }
 
         .scroll-date__container {
@@ -68,8 +67,8 @@ $z-index-date-picker-title: 10001;
             margin-top:50px;
 
             .calendar {
-                width: 35%;
-                margin:0 90px;
+                width: 30%;
+                margin:0 120px;
                 text-align: center;
                 border-collapse: collapse;
                 background-color: #fff;
@@ -110,6 +109,14 @@ $z-index-date-picker-title: 10001;
 
     &.out {
         display: none;
+    }
+
+    &.rtl {
+        transform: translateX(100%);
+    }
+
+    &.rtl.list-mode {
+        transform: none;
     }
 
     &.visible {
@@ -159,8 +166,7 @@ $z-index-date-picker-title: 10001;
         width: 100%;
         text-align: center;
         background-color:#fff;
-
-        &--title {
+     &--title {
             font-size: 20px;
             font-weight: normal;
             margin: 17px 0 16px;
@@ -334,7 +340,7 @@ $z-index-date-picker-title: 10001;
 
             &.first, &.second {
                 &.connect:before {
-                    // content: "";
+                    content: "";
                     // position: absolute;
                     // top: 3px;
                     // bottom: 3px;
