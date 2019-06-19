@@ -38,8 +38,23 @@ $z-index-date-picker-title: 10001;
         padding-top:0px;
         bottom:unset;
 
-        .scroll-date__header {
-            display:none;
+        .scroll-date__ui {
+            position:relative;
+            padding:0;
+            background:#fff;
+            border:0px;
+            height:100%;
+            padding-bottom:10px;
+            &--dates {
+                display:none;
+            }
+            &--submit-container {
+                padding-top: 0;
+                &__submit {
+                    display:inline-block;
+                    background-color:#07a2ba;
+                }
+            }
         }
 
         .scroll-date__container {
@@ -47,37 +62,50 @@ $z-index-date-picker-title: 10001;
             overflow: auto;
             width: 100%;
             background-color:#fff;
-            top: unset;
             bottom: unset;
-        }
+            top:unset;
+            margin-top:50px;
 
-        .calendar {
-            width: 40%;
-            margin:0 60px;
-            text-align: center;
-            border-collapse: collapse;
-            background-color: #fff;
-            float:left;
-            display: none;
-            &.visible {
-                display: table;
+            .calendar {
+                width: 30%;
+                margin:0 120px;
+                text-align: center;
+                border-collapse: collapse;
+                background-color: #fff;
+                float:left;
+                display: none;
+                &.visible {
+                    display: block;
+                }
+            }
+
+
+
+            .scroll-date__list-mode-controls {
+                position:relative;
+                width:100%;
+                height:30px;
+
+                .prev, .next {
+                    position:absolute;
+                    cursor:pointer;
+                    font-size:30px;
+                    top:180px;
+                    &.disabled {
+                        display:none;
+                    }
+                }
+                .prev {
+                    right:3%;
+                    &:before {content: "<";}
+                }
+                .next {
+                    left:3%;
+                    &:before {content: ">";}
+                }
             }
         }
     }
-
-    &__list-mode-controls {
-        .prev {
-            border:20px solid red;
-            width: 20px;height:20px;
-        }
-
-        .next {
-            border:20px solid red;
-            width: 20px;height:20px;
-
-        }
-    }
-
 
     &.out {
         display: none;
@@ -134,12 +162,11 @@ $z-index-date-picker-title: 10001;
         top: 0;
         left: 0;
         z-index: $z-index-date-picker-title;
-        color: #e6e6e8;
+        color: #00003c;
         width: 100%;
         text-align: center;
-        background-color: rgba(0, 0, 0, .9);
-
-        &--title {
+        background-color:#fff;
+     &--title {
             font-size: 20px;
             font-weight: normal;
             margin: 17px 0 16px;
@@ -282,10 +309,18 @@ $z-index-date-picker-title: 10001;
 
             div {
                 padding: 15px 12px;
+                &:hover {
+                    background:#07a2ba;
+                    color: #fff;
+                }
             }
 
             &.invalid {
                 color: #c2c1c6;
+                &:hover {
+                    background:none;
+                    color: #c2c1c6;
+                }
             }
 
             &.connect {
@@ -306,11 +341,11 @@ $z-index-date-picker-title: 10001;
             &.first, &.second {
                 &.connect:before {
                     content: "";
-                    position: absolute;
-                    top: 3px;
-                    bottom: 3px;
-                    width: 10px;
-                    background: #fff5b7;
+                    // position: absolute;
+                    // top: 3px;
+                    // bottom: 3px;
+                    // width: 10px;
+                    // background: #07a2ba;
                 }
             }
 
