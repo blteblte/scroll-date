@@ -31,5 +31,8 @@
     "webpack-dev-server": "^3.4.1",
     "webpack-merge": "^4.2.1",
     "webpack-notifier": "^1.7.0"
+  },
+  "dependencies": {
+    "promise-polyfill": "8.1.3"
   }
 }

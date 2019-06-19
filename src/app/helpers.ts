@@ -1,11 +1,11 @@
-export function getDateElalSearchFormat(date: Date): string {
-    const dd = date.getDate()
-    const mIx = date.getMonth()
-    const yyyy = date.getFullYear()
-    const mArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec']
+// export function getDateElalSearchFormat(date: Date): string {
+//     const dd = date.getDate()
+//     const mIx = date.getMonth()
+//     const yyyy = date.getFullYear()
+//     const mArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec']
 
-    return `${dd}/${mArr[mIx]}/${yyyy}`
-}
+//     return `${dd}/${mArr[mIx]}/${yyyy}`
+// }
 
 export function parseDate(dateStr: string) {
     try {

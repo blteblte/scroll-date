@@ -1,7 +1,5 @@
-@import '../scss/reset';
-
-$z-index-date-picker: 1;
-$z-index-date-picker-title: 2;
+$z-index-date-picker: 10000;
+$z-index-date-picker-title: 10001;
 
 .scroll-date {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,6 +20,30 @@ $z-index-date-picker-title: 2;
     transform: translateX(-100%);
     overflow-x: hidden;
     overflow-y: auto;
+
+    &.list-mode {
+        .calendar {
+            display: none;
+            &.visible {
+                display: table;
+            }
+        }
+    }
+
+    &__list-mode-controls {
+        .prev {
+
+        }
+
+        .next {
+
+        }
+    }
+
+
+    &.out {
+        display: none;
+    }
 
     &.rtl {
         right: 0;

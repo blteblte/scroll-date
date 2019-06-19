@@ -7,7 +7,7 @@ import './scroll-date.scss';
  */
 
 
-import { Options, defaultOptions } from './options';
+import { Options, defaultOptions, parseOptions } from './options';
 import { camelCaseToDash, getDatePickerPlaceholderDate, parseDate, isDatesEqual, getDateISOFormat } from './helpers';
 import { generateCalendarHTML } from './lib/generate';
 import { translations } from './translations';
@@ -32,6 +32,9 @@ interface Dom {
   uiToDate: HTMLElement
   selectedMonthRef: HTMLElement
   calendarDates: IDateItem[]
+  calendars: HTMLElement[]
+  listModePrev: HTMLElement
+  listModeNext: HTMLElement
 }
 
 interface State {
@@ -42,7 +45,9 @@ interface State {
   zeroDate: Date
   date1: Date
   date2: Date
-  cachedDate2: Date;
+  cachedDate2: Date
+  animationBussy: boolean
+  listModePageIndex: number
 }
 
 export class ScrollDate {
@@ -63,7 +68,10 @@ export class ScrollDate {
     uiFromDate: null,
     uiToDate: null,
     selectedMonthRef: null,
-    calendarDates: null
+    calendarDates: null,
+    calendars: null,
+    listModePrev: null,
+    listModeNext: null
   }
 
   private _state: State = {
@@ -74,7 +82,9 @@ export class ScrollDate {
     zeroDate: null,
     date1: null,
     date2: null,
-    cachedDate2: null
+    cachedDate2: null,
+    animationBussy: false,
+    listModePageIndex: 0
   }
 
   public constructor(
@@ -94,6 +104,7 @@ export class ScrollDate {
     })
 
     this.options = { ...scrollDateOptions, ...userOptions}
+    this.options = parseOptions(this.options)
 
     if (typeof this.options.from === 'string') {
       this._targets.dateFromInput = document.querySelector(this.options.from)
@@ -116,7 +127,7 @@ export class ScrollDate {
     this._dom.datepickerWrapper = document.createElement('div')
     this._dom.datepickerWrapper.classList.add('scroll-date')
 
-    this._state.zeroDate = new Date()
+    this._state.zeroDate = this.options.zeroDate
     this._state.zeroDate.setHours(0, 0, 0, 0)
 
     /* dafault date values */
@@ -239,26 +250,43 @@ export class ScrollDate {
       return this._dom.datepickerWrapper.classList.contains('visible')
   }
 
-  public Hide() {
-      this._dom.datepickerWrapper.classList.contains('visible') && this._dom.datepickerWrapper.classList.remove('visible')
-      document.body.style.overflowY = 'auto';
+  public async Hide() {
+      const { datepickerWrapper } = this._dom
+      datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.remove('visible')
+      if (!this.options.listMode) {
+        document.body.style.overflowY = 'auto';
+      }
+
+      await this.wait(this.options.inOutTime)
+      !datepickerWrapper.classList.contains('out') && datepickerWrapper.classList.add('out')
   }
 
-  public Show() {
+  public async Show() {
+      const { datepickerWrapper } = this._dom
       this.SetFromDate(this._state.date1)
       this.SetToDate(this._state.date2)
-      !this._dom.datepickerWrapper.classList.contains('visible') && this._dom.datepickerWrapper.classList.add('visible')
-      document.body.style.overflowY = 'hidden';
+      datepickerWrapper.classList.contains('out') && datepickerWrapper.classList.remove('out')
+      if (!this.options.listMode) {
+          document.body.style.overflowY = 'hidden';
+      }
       if (this._dom.selectedMonthRef) {
           const monthRefOffset = this._dom.selectedMonthRef.offsetTop
           this._dom.datepickerContainer.scrollTo(0, monthRefOffset)
       }
+
+      await this.wait(10)
+      !datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.add('visible')
   }
 
   public async Render() {
+      const { datepickerWrapper } = this._dom
 
-      if (this.options.rtl && !this._dom.datepickerWrapper.classList.contains('rtl')) {
-          this._dom.datepickerWrapper.classList.add('rtl')
+      if (this.options.rtl && !datepickerWrapper.classList.contains('rtl')) {
+        datepickerWrapper.classList.add('rtl')
+      }
+
+      if (this.options.listMode && !datepickerWrapper.classList.contains('list-mode')) {
+        datepickerWrapper.classList.add('list-mode')
       }
 
       await this.render(this.options.startDate, this.options.monthCount, this.host, true, this.options.rtl)
@@ -270,6 +298,44 @@ export class ScrollDate {
       if (this._state.singleDateMode) {
         this.setSingleDateMode()
       }
+
+      if (this.options.listMode) {
+          this.renderListMode()
+      }
+
+      if (this.options.visibleByDefault) {
+        !datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.add('visible')
+      } else {
+        !datepickerWrapper.classList.contains('out') && datepickerWrapper.classList.add('out')
+      }
+  }
+
+  private renderListMode() {
+    // console.log(this._dom)
+    const listModelControllsContainer = document.createElement('div')
+    listModelControllsContainer.className = 'scroll-date__list-mode-controls'
+
+    const prevButton = document.createElement('div')
+    prevButton.className = 'prev'
+
+    const nextButton = document.createElement('div')
+    nextButton.className = 'next'
+
+    listModelControllsContainer.appendChild(prevButton)
+    listModelControllsContainer.appendChild(nextButton)
+
+    this._dom.datepickerWrapper.appendChild(listModelControllsContainer)
+
+    this.setListDatePage(0)
+  }
+
+  private setListDatePage(index: number) {
+    this._dom.calendars.forEach((calendar, i) => {
+        if (i === index || i === index + 1) {
+            !calendar.classList.contains('visible')
+              && calendar.classList.add('visible')
+        }
+    })
   }
 
     private async render(
@@ -327,10 +393,7 @@ export class ScrollDate {
         this._dom.datepickerSubmit.className = 'scroll-date__ui--submit-container__submit'
         this._dom.datepickerSubmit.innerHTML = translations[this.options.lang].selectTheseDates
         this._dom.datepickerSubmit.addEventListener('click', () => {
-            this._state.date1 = this.firstSelectedDate.date
-            this._state.date2 = (this.secondSelectedDate || this.firstSelectedDate).date
-            this.apply(this._state.date1, this._state.date2)
-            this.Hide()
+            this.submitClose()
         })
         uiSubmitContainer.appendChild(this._dom.datepickerSubmit)
         datepickerUIContainer.appendChild(uiDatesContainer)
@@ -351,10 +414,21 @@ export class ScrollDate {
         this._state.isRendered = true
     }
 
+    private submitClose() {
+        this._state.date1 = this.firstSelectedDate.date
+        this._state.date2 = (this.secondSelectedDate || this.firstSelectedDate).date
+        this.apply(this._state.date1, this._state.date2)
+        this.Hide()
+    }
+
     private async bind() {
       const tds = Array.prototype.slice.call(
           this._dom.datepickerWrapper.querySelectorAll('td[data-timestamp]')
       ) as HTMLElement[]
+
+      this._dom.calendars = Array.prototype.slice.call(
+        this._dom.datepickerWrapper.querySelectorAll('.calendar')
+      )
 
       this._dom.calendarDates = tds.map((td) => {
           const tdDate = new Date(parseInt(td.getAttribute('data-timestamp')))
@@ -528,8 +602,14 @@ export class ScrollDate {
 
               if (isSingleDateMode) {
                   this._state.selectingCount = 0
+                  if (this.options.autoSubmit) {
+                    this.submitClose()
+                  }
               } else if (this._state.selectingCount === 2) {
                   this._state.selectingCount = 0
+                  if (this.options.autoSubmit) {
+                    this.submitClose()
+                  }
               }
           })
 
@@ -540,6 +620,12 @@ export class ScrollDate {
       var date = new Date(dt.valueOf());
       date.setDate(date.getDate() + days);
       return date;
+  }
+
+  private wait(ms: number) {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(), ms)
+    })
   }
 
 }
