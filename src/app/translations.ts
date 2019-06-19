@@ -96,7 +96,7 @@ export const translations = {
   },
 
   /* Hebrew */
-  he_short: {
+  heShort: {
     month: [
         'ינואר',
         'פברואר',
