@@ -289,6 +289,10 @@ export class ScrollDate {
         datepickerWrapper.classList.add('list-mode')
       }
 
+      if (this.options.autoSubmit && !datepickerWrapper.classList.contains('auto-submit')) {
+        datepickerWrapper.classList.add('auto-submit')
+      }
+
       await this.render(this.options.startDate, this.options.monthCount, this.host, true, this.options.rtl)
       await this.bind()
 

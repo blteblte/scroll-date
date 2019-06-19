@@ -21,6 +21,12 @@ $z-index-date-picker-title: 10001;
     overflow-x: hidden;
     overflow-y: auto;
 
+    &.auto-submit {
+        .scroll-date__ui {
+            display: none;
+        }
+    }
+
     &.list-mode {
         .calendar {
             display: none;
