@@ -12,25 +12,74 @@
     input { padding: 16px; outline: none; }
     .container {
       text-align: center;
-      margin-top: 100px;
+      margin-top: 80px;
+    }
+    fieldset {
+      border-radius: 8px;
+      border: 1px solid #f3f3f3;
+      padding: 40px 10px;
+      margin-top: 20px;
     }
   </style>
 
   <div class="container">
 
       <form method="GET">
-        <label for="from-date">עזיבה:</label>
-        <input type="text" id="from-date" name="from-date" />
+        <fieldset>
+            <legend>Scroll:</legend>
 
-        <label for="to-date">הגעה:</label>
-        <input type="text" id="to-date" name="to-date" />
+            <label for="from-date">עזיבה:</label>
+            <input type="text" id="from-date" name="from-date" />
 
-        <input type="submit" />
+            <label for="to-date">הגעה:</label>
+            <input type="text" id="to-date" name="to-date" />
+
+            <input type="submit" />
+        </fieldset>
+      </form>
+
+      <form method="GET">
+        <fieldset>
+            <legend>Single-Date-Scroll:</legend>
+
+            <label for="from-date-single">עזיבה:</label>
+            <input type="text" id="from-date-single" name="from-date" />
+
+            <input type="submit" />
+        </fieldset>
+      </form>
+
+      <form method="GET">
+        <fieldset>
+          <legend>List-View:</legend>
+
+            <label for="from-date-list">עזיבה:</label>
+            <input type="text" id="from-date-list" name="from-date" />
+
+            <label for="to-date-list">הגעה:</label>
+            <input type="text" id="to-date-list" name="to-date" />
+
+            <input type="submit" />
+        </fieldset>
+      </form>
+
+      <form method="GET">
+        <fieldset>
+          <legend>Single-Date-List-View:</legend>
+
+            <label for="from-date-list-single">עזיבה:</label>
+            <input type="text" id="from-date-list-single" name="from-date" />
+
+            <input type="submit" />
+        </fieldset>
       </form>
 
   </div>
 
   <!-- for RTL body should have: direction:rtl; -->
-  <scroll-date from="#from-date" to="#to-date" rtl="true" lang="he" list-mode="true" auto-submit="true" month-count="5"></scroll-date>
+  <scroll-date from="#from-date" to="#to-date" rtl="true" lang="he"></scroll-date>
+  <scroll-date from="#from-date-single" rtl="true" lang="he"></scroll-date>
+  <scroll-date from="#from-date-list" to="#to-date-list" rtl="true" lang="he" list-mode="true" auto-submit="true" month-count="5"></scroll-date>
+  <scroll-date from="#from-date-list-single" rtl="true" lang="he" list-mode="true" auto-submit="true" month-count="5"></scroll-date>
 </body>
 </html>
