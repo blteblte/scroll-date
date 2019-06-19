@@ -13,6 +13,11 @@
     .container {
       text-align: center;
       margin-top: 100px;
+      width:1200px;
+      height:600px;
+      position:relative;
+      border:1px solid red;
+      margin:0 auto;
     }
   </style>
 
@@ -26,11 +31,15 @@
         <input type="text" id="to-date" name="to-date" />
 
         <input type="submit" />
+
       </form>
+
+      <!-- for RTL body should have: direction:rtl; -->
+      <scroll-date from="#from-date" to="#to-date" rtl="true" lang="he_short" list-mode="true" auto-submit="true" month-count="5"></scroll-date>
+
 
   </div>
 
-  <!-- for RTL body should have: direction:rtl; -->
-  <scroll-date from="#from-date" to="#to-date" rtl="true" lang="he" list-mode="true" auto-submit="true" month-count="5"></scroll-date>
+
 </body>
 </html>

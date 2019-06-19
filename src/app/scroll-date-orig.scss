@@ -2,19 +2,24 @@ $z-index-date-picker: 10000;
 $z-index-date-picker-title: 10001;
 
 .scroll-date {
-    font-family: 'Rubik';
-    position: absolute;
-    top:60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
     padding: 0 0px 0;
     box-sizing: border-box;
+    top: 0px;
     height: 100%;
-    width: 100%;
+    bottom: 130px;
+    padding-top: 60px;
+    left: 0;
+    max-width: 600px;
     background: #fff;
     opacity: 0;
     z-index: -1;
     transition: all .3s;
-    transform: translateY(-100%);
-    overflow: hidden;
+    right: 0;
+    transform: translateX(-100%);
+    overflow-x: hidden;
+    overflow-y: auto;
 
     &.auto-submit {
         .scroll-date__ui {
@@ -46,6 +51,11 @@ $z-index-date-picker-title: 10001;
         display: none;
     }
 
+    &.rtl {
+        right: 0;
+        transform: translateX(100%);
+    }
+
     &.visible {
         transform: none;
         opacity: 1;
@@ -75,7 +85,6 @@ $z-index-date-picker-title: 10001;
         left: 0;
         opacity: 0;
         transition: .3s all .3s;
-        display:none;
         /*z-index: -1;*/
     }
 
@@ -94,7 +103,6 @@ $z-index-date-picker-title: 10001;
         width: 100%;
         text-align: center;
         background-color: rgba(0, 0, 0, .9);
-        display:none;
 
 
         &--title {
@@ -201,14 +209,14 @@ $z-index-date-picker-title: 10001;
 
 
     .calendar {
-        width: 40%;
-        margin:0 60px;
+        width: 100%;
         text-align: center;
         border-collapse: collapse;
         background-color: #fff;
-        float:left;
 
         tr {
+            border-bottom: 1px solid #ddd;
+
             &:last-child {
                 border: none;
             }
@@ -224,17 +232,18 @@ $z-index-date-picker-title: 10001;
 
 
         th {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
+            background: #f6f7f9;
             color: #333;
         }
 
         td {
-            font-size: 16px;
+            font-size: 14px;
+            padding: 3px 0;
             position: relative;
             background-color: #fff;
             user-select: none;
-            color:#00003c;
 
             &:not(.invalid) {
                 cursor: pointer;
@@ -249,16 +258,18 @@ $z-index-date-picker-title: 10001;
             }
 
             &.connect {
+                color: #0184df;
+
                 div {
-                    background: #d9f1f5;
+                    background: #fff5b7;
                 }
             }
 
             &.selected {
                 div {
-                    background: #07a2ba;
+                    background: #f79d11;
                     color: #fff;
-                    border-radius: 0px;
+                    border-radius: 8px;
                     position: relative;
                 }
             }
@@ -289,7 +300,7 @@ $z-index-date-picker-title: 10001;
             &.currentday {
                 div {
                     border: 1px solid #f89d11;
-                    border-radius: 0px;
+                    border-radius: 8px;
                 }
             }
         }
@@ -302,10 +313,6 @@ $z-index-date-picker-title: 10001;
                 padding: 5px 5px 10px;
             }
         }
-    }
-
-    &.rtl .calendar {
-        float:right;
     }
 
     &.rtl .calendar td.first.connect:before {

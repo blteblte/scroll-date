@@ -32,6 +32,38 @@ export const translations = {
     selectTheseDates: 'Select these dates'
   },
 
+   /* English Short */
+  en_short: {
+    month: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
+    weekday: [
+        'Su',
+        'Mo',
+        'Tu',
+        'We',
+        'Th',
+        'Fr',
+        'Sa'
+    ],
+    selectDate: 'Select date',
+    selectDates: 'Select dates',
+    selectThisDate: 'Select this date',
+    selectTheseDates: 'Select these dates'
+  },
+
+
   /* Hebrew */
   he: {
     month: [
@@ -56,6 +88,37 @@ export const translations = {
         'יום חמישי',
         'יום שישי',
         'יום שבת'
+    ],
+    selectDate: 'בחר תאריך',
+    selectDates: 'בחר תאריכים',
+    selectThisDate: 'בחר תאריך זה',
+    selectTheseDates: 'בחר תאריכים אלה'
+  },
+
+  /* Hebrew */
+  he_short: {
+    month: [
+        'ינואר',
+        'פברואר',
+        'מרץ',
+        'אפריל',
+        'מאי',
+        'יוני',
+        'יולי',
+        'אוגוסט',
+        'ספטמבר',
+        'אוקטובר',
+        'נובמבר',
+        'דצמבר'
+    ],
+    weekday: [
+        'א\'',
+        'ב\'',
+        'ג\'',
+        'ד\'',
+        'ה\'',
+        'ו\'',
+        'ש\''
     ],
     selectDate: 'בחר תאריך',
     selectDates: 'בחר תאריכים',
