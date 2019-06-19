@@ -91,7 +91,7 @@ export class ScrollDate {
         , userOptions: Options = ({} as any)
     ) {
         /* set default */
-        const scrollDateOptions = defaultOptions
+        const scrollDateOptions = { ...defaultOptions }
 
         /* get from tag attributes */
         Object.keys(scrollDateOptions).forEach((key) => {
@@ -247,11 +247,12 @@ export class ScrollDate {
 
     public Visible() {
         return this._dom.datepickerWrapper.classList.contains('visible')
+            && !this._dom.datepickerWrapper.classList.contains('out')
     }
 
     public async Hide() {
         if (!this.Visible()) { return }
-        
+
         const { datepickerWrapper } = this._dom
         datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.remove('visible')
         if (!this.options.listMode) {
@@ -259,7 +260,9 @@ export class ScrollDate {
         }
 
         await this.wait(this.options.inOutTime)
-        !datepickerWrapper.classList.contains('out') && datepickerWrapper.classList.add('out')
+        if (!datepickerWrapper.classList.contains('out') && !this.Visible()) {
+            datepickerWrapper.classList.add('out')
+        }
     }
 
     public async Show() {
@@ -373,8 +376,6 @@ export class ScrollDate {
             secondIndex = maxIndex
             firstIndex = maxIndex - 1
         }
-
-        if (this._state.listModePageIndex === firstIndex) { return }
 
         this._state.listModePageIndex = firstIndex
 
