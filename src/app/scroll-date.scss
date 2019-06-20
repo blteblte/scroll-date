@@ -65,6 +65,7 @@ $z-index-date-picker-title: 10001;
             &--submit-container {
                 padding-top: 0;
                 &__submit {
+                    user-select: none;
                     display: inline-block;
                     background-color: #07a2ba;
                 }
@@ -349,6 +350,7 @@ $z-index-date-picker-title: 10001;
 
         .currentmonth {
             border-bottom: none;
+            user-select: none;
 
             th {
                 padding: 10px 5px 5px;
