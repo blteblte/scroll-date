@@ -424,6 +424,7 @@ export class ScrollDateBase {
         , rtl: boolean = false
     ) {
         const calendarHtml = await generateCalendarHTML(drawingStartDate, monthCountToDraw, this.options.lang)
+
         if (clearContainer) {
             container.innerHTML = ''
         }

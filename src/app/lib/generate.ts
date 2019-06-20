@@ -45,7 +45,7 @@ function calendar(month, y, lang): Promise<string> {
         // Also getting the day of the week.	//
         //////////////////////////////////////////
 
-        var tempDate = new Date(tempMonth + ' 1 ,' + year);
+        var tempDate = new Date(`${year}-01-${tempMonth < 10 ? '0' + tempMonth : tempMonth}`);
         var tempweekday = tempDate.getDay();
         var tempweekday2 = tempweekday;
         var dayAmount: any = totalDays[month];

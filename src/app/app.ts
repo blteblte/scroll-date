@@ -1,3 +1,4 @@
+import './polyfills/_polyfills';
 import 'promise-polyfill/src/polyfill';
 import { ScrollDate } from './scroll-date';
 
