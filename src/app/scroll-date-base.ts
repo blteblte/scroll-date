@@ -74,6 +74,9 @@ export class ScrollDateBase {
         protected host: HTMLElement
         , userOptions: Options = ({} as any)
     ) {
+        /* set reference to this class on the element it self */
+        host['ScrollDate'] = this
+
         this.events = []
 
         /* set default */
@@ -153,9 +156,6 @@ export class ScrollDateBase {
         if (this._targets.dateToInput) {
             this._targets.dateToInput.addEventListener('focus', () => this.Show())
         }
-
-        /* set reference to this class on the element it self */
-        host['ScrollDate'] = this
 
         this.Render()
     }
@@ -257,6 +257,10 @@ export class ScrollDateBase {
     protected Visible() {
         return this._dom.datepickerWrapper.classList.contains('visible')
             && !this._dom.datepickerWrapper.classList.contains('out')
+    }
+
+    protected IsSingleDateMode() {
+        return this._state.singleDateMode
     }
 
     protected async Hide() {

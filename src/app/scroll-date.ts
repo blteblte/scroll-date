@@ -77,6 +77,13 @@ export class ScrollDate extends ScrollDateBase {
     }
 
     /**
+     * Returns if datepicker is in single-date select mode
+     */
+    public IsSingleDateMode() {
+        return super.IsSingleDateMode()
+    }
+
+    /**
      * Hide datepicker
      */
     public async Hide() {
