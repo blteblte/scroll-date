@@ -1,4 +1,13 @@
 
+export interface Translation {
+  month: string[]
+  weekday: string[]
+  selectDate: string
+  selectDates: string
+  selectThisDate: string
+  selectTheseDates: string
+}
+
 export const translations = {
 
   /* English */
@@ -30,10 +39,10 @@ export const translations = {
     selectDates: 'Select dates',
     selectThisDate: 'Select this date',
     selectTheseDates: 'Select these dates'
-  },
+  } as Translation,
 
    /* English Short */
-  en_short: {
+  enShort: {
     month: [
       'January',
       'February',
@@ -61,7 +70,7 @@ export const translations = {
     selectDates: 'Select dates',
     selectThisDate: 'Select this date',
     selectTheseDates: 'Select these dates'
-  },
+  } as Translation,
 
 
   /* Hebrew */
@@ -93,7 +102,7 @@ export const translations = {
     selectDates: 'בחר תאריכים',
     selectThisDate: 'בחר תאריך זה',
     selectTheseDates: 'בחר תאריכים אלה'
-  },
+  } as Translation,
 
   /* Hebrew */
   heShort: {

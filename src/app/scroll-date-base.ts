@@ -20,7 +20,7 @@ import { ScrollDateEvent } from './models/ScrollDateEvent';
 import { generateCalendarHTML } from './lib/generate';
 import { EventType } from './models/EventType';
 import { IDateItem } from './models/IDateItem';
-import { translations } from './translations';
+import { translations, Translation } from './translations';
 import { Targets } from './models/Targets';
 import { State } from './models/State';
 import { Dom } from './models/Dom';
@@ -28,6 +28,8 @@ import { isFunction } from 'util';
 
 
 export class ScrollDateBase {
+
+    private tr: Translation
 
     private events: ScrollDateEvent[]
 
@@ -161,6 +163,12 @@ export class ScrollDateBase {
 
         if (this._targets.dateToInput) {
             this._targets.dateToInput.addEventListener('focus', () => this.Show())
+        }
+
+        /* apply translations */
+        this.tr = translations[this.options.lang]
+        if (this.options.translation !== null) {
+            this.tr = this.options.translation
         }
 
         await this.Render()
@@ -482,7 +490,7 @@ export class ScrollDateBase {
         headerContainer.className = 'scroll-date__header'
         this._dom.datepickerTitle = document.createElement('div')
         this._dom.datepickerTitle.className = 'scroll-date__header--title'
-        this._dom.datepickerTitle.innerHTML = translations[this.options.lang].selectDates
+        this._dom.datepickerTitle.innerHTML = this.tr[this.options.lang].selectDates
         const closeButton = document.createElement('span')
         closeButton.className = 'scroll-date__header--close'
         closeButton.addEventListener('click', () => this.Hide())
@@ -518,7 +526,7 @@ export class ScrollDateBase {
         uiSubmitContainer.className = 'scroll-date__ui--submit-container'
         this._dom.datepickerSubmit = document.createElement('span')
         this._dom.datepickerSubmit.className = 'scroll-date__ui--submit-container__submit'
-        this._dom.datepickerSubmit.innerHTML = translations[this.options.lang].selectTheseDates
+        this._dom.datepickerSubmit.innerHTML = this.tr.selectTheseDates
         this._dom.datepickerSubmit.addEventListener('click', () => {
             this.submitClose()
         })
@@ -576,8 +584,8 @@ export class ScrollDateBase {
     }
 
     private setSingleDateMode() {
-        this._dom.datepickerTitle.innerHTML = translations[this.options.lang].selectDate
-        this._dom.datepickerSubmit.innerHTML = translations[this.options.lang].selectThisDate
+        this._dom.datepickerTitle.innerHTML = this.tr.selectDate
+        this._dom.datepickerSubmit.innerHTML = this.tr.selectThisDate
 
         if (!this._state.cachedDate2) {
             this._state.cachedDate2 = this._state.date2
@@ -587,8 +595,8 @@ export class ScrollDateBase {
     }
 
     // private unsetSingleDateMode() {
-    //     this.datepickerTitle.innerHTML = translations[this.options.lang].selectDates
-    //     this.datepickerSubmit.innerHTML = translations[this.options.lang].selectTheseDates
+    //     this.datepickerTitle.innerHTML = this.tr.selectDates
+    //     this.datepickerSubmit.innerHTML = this.tr.selectTheseDates
 
     //     if (this.cachedDate2) {
     //         if (this.cachedDate2 > this.date1) {

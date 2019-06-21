@@ -1,4 +1,5 @@
-import { parseDate } from "./helpers";
+import { parseDate } from './helpers';
+import { Translation } from './translations';
 
 export interface Options {
   zeroDate: Date
@@ -12,6 +13,7 @@ export interface Options {
   inOutTime: number
   visibleByDefault: boolean
   autoSubmit: boolean
+  translation: Translation
 }
 
 export const defaultOptions: Options = {
@@ -26,6 +28,7 @@ export const defaultOptions: Options = {
   , inOutTime: 300
   , visibleByDefault: false
   , autoSubmit: false
+  , translation: null
 }
 
 export function parseOptions(obj: Options): Options {
@@ -60,6 +63,10 @@ export function parseOptions(obj: Options): Options {
 
   if (typeof obj.autoSubmit === 'string') {
     obj.autoSubmit = obj.autoSubmit === 'true' || obj.autoSubmit === '1'
+  }
+
+  if (typeof obj.translation === 'string') {
+    obj.translation = JSON.parse(obj.translation)
   }
 
   return obj
