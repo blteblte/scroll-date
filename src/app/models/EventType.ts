@@ -3,3 +3,5 @@ export type EventType =
   | 'onfirstselected'
   | 'onsecondselected'
   | 'onready'
+  | 'onshow'
+  | 'onhide'

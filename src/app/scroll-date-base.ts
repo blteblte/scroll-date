@@ -318,6 +318,7 @@ export class ScrollDateBase {
         if (!datepickerWrapper.classList.contains('out') && !this.Visible()) {
             datepickerWrapper.classList.add('out')
         }
+        this.triggerEvent('onhide', this._state.date1, this._state.date2)
     }
 
     protected async Show() {
@@ -341,6 +342,7 @@ export class ScrollDateBase {
 
         await this.wait(10)
         !datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.add('visible')
+        this.triggerEvent('onshow', this._state.date1, this._state.date2)
     }
 
     protected async Render() {
