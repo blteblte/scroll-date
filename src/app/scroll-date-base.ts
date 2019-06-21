@@ -62,7 +62,9 @@ export class ScrollDateBase {
         date1: null,
         date2: null,
         cachedDate2: null,
-        listModePageIndex: null
+        listModePageIndex: null,
+        onChangeDate1: null,
+        onChangeDate2: null
     }
 
     /**
@@ -163,6 +165,8 @@ export class ScrollDateBase {
 
         await this.Render()
 
+        this._state.onChangeDate1 = this._state.date1
+        this._state.onChangeDate2 = this._state.date2
         this.triggerEvent('onready', this._state.date1, this._state.date2)
     }
 
@@ -594,8 +598,6 @@ export class ScrollDateBase {
     // }
 
     private apply(date1: Date, date2: Date) {
-        const isChanged = date1 !== this._state.date1 || date2 !== this._state.date2
-
         this._state.date1 = date1
         const txt1 = getDatePickerPlaceholderDate(this._state.date1)
         this._targets.dateFromInput.placeholder = txt1
@@ -610,7 +612,9 @@ export class ScrollDateBase {
             this._targets.dateToInput.value = isoDate2
         }
 
-        if (isChanged) {
+        if (this._state.date1 !== this._state.onChangeDate1 || this._state.date2 !== this._state.onChangeDate2) {
+            this._state.onChangeDate1 = this._state.date1
+            this._state.onChangeDate2 = this._state.date2
             this.triggerEvent('onchange', this._state.date1, this._state.date2)
         }
     }

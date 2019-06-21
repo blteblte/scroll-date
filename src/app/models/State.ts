@@ -8,4 +8,6 @@ export interface State {
   date2: Date
   cachedDate2: Date
   listModePageIndex: number
+  onChangeDate1: Date
+  onChangeDate2: Date
 }

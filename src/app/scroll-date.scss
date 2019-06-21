@@ -461,6 +461,7 @@ $z-index-date-picker-title: 10001;
             border-left: 6px solid #07a2ba;
             left: auto;
             right: -5px;
+            z-index: 11;
         }
 
         &.rtl .calendar td.first.connect:after {
