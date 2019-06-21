@@ -452,6 +452,10 @@ $z-index-date-picker-title: 10001;
             z-index: 10;
         }
 
+        .calendar td.first.second.connect:after {
+            border: 0;
+        }
+
         .calendar td.first.connect:after {
             border-right: 0;
             border-left: 6px solid #07a2ba;

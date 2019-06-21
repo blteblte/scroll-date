@@ -70,6 +70,34 @@ export class ScrollDate extends ScrollDateBase {
     }
 
     /**
+     * Increase from date by 1 day
+     */
+    protected FromDateNext() {
+        super.FromDateNext()
+    }
+
+    /**
+     * Decrease from date by 1 day
+     */
+    protected FromDatePrev() {
+        super.FromDatePrev()
+    }
+
+    /**
+     * Increase to date by 1 day
+     */
+    protected ToDateNext() {
+        super.ToDateNext()
+    }
+
+    /**
+     * Decrease to date by 1 day
+     */
+    protected ToDatePrev() {
+        super.ToDatePrev()
+    }
+
+    /**
      * Returns if datepicker is visible (.visible && !.out)
      */
     public Visible() {

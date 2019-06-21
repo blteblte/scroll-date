@@ -77,6 +77,10 @@ export class ScrollDateBase {
         /* set reference to this class on the element it self */
         host['ScrollDate'] = this
 
+        this.init(userOptions)
+    }
+
+    private async init(userOptions: Options) {
         this.events = []
 
         /* set default */
@@ -85,7 +89,7 @@ export class ScrollDateBase {
         /* get from tag attributes */
         Object.keys(scrollDateOptions).forEach((key) => {
             const attributeName = camelCaseToDash(key)
-            const attributeValue = host.getAttribute(attributeName)
+            const attributeValue = this.host.getAttribute(attributeName)
             if (attributeValue) {
                 scrollDateOptions[key] = attributeValue
             }
@@ -157,7 +161,9 @@ export class ScrollDateBase {
             this._targets.dateToInput.addEventListener('focus', () => this.Show())
         }
 
-        this.Render()
+        await this.Render()
+
+        this.triggerEvent('onready', this._state.date1, this._state.date2)
     }
 
 
@@ -211,10 +217,28 @@ export class ScrollDateBase {
         this._state.startDate = d
         this.updateCalendarStartDate()
         if (this._state.startDate > this._state.date1) {
-            this.SetFromDate(d as Date)
-            this.SetToDate(d as Date)
+            this.SetFromDate(d)
+        }
+        if (this._state.startDate > this._state.date2) {
+            this.SetToDate(d)
         }
         this._state.selectingCount = 0
+    }
+
+    protected FromDateNext() {
+        this.SetFromDate(this.addDays(this._state.date1, +1))
+    }
+
+    protected FromDatePrev() {
+        this.SetFromDate(this.addDays(this._state.date1, -1))
+    }
+
+    protected ToDateNext() {
+        this.SetToDate(this.addDays(this._state.date2, +1))
+    }
+
+    protected ToDatePrev() {
+        this.SetToDate(this.addDays(this._state.date2, -1))
     }
 
     protected ClearStartDate() {
@@ -243,10 +267,14 @@ export class ScrollDateBase {
             d = parseDate(d as string)
             d.setHours(0, 0, 0, 0)
         }
+        if (this._state.startDate > d) { return }
         this._state.date1 = d
         this.updateCalendarSelectFirstDate(d)
         this.apply(this._state.date1, this._state.date2)
         this._state.selectingCount = 0
+        if (d > this._state.date2) {
+            this.SetToDate(d)
+        }
     }
 
     protected SetToDate(d: string | Date) {
@@ -254,10 +282,14 @@ export class ScrollDateBase {
             d = parseDate(d as string)
             d.setHours(0, 0, 0, 0)
         }
+        if (this._state.startDate > d) { return }
         this._state.date2 = d
         this.updateCalendarSelectSecondDate(d)
         this.apply(this._state.date1, this._state.date2)
         this._state.selectingCount = 0
+        if (d < this._state.date1) {
+            this.SetFromDate(d)
+        }
     }
 
     protected Visible() {
@@ -507,7 +539,6 @@ export class ScrollDateBase {
         this._state.date1 = this.firstSelectedDate.date
         this._state.date2 = (this.secondSelectedDate || this.firstSelectedDate).date
         this.apply(this._state.date1, this._state.date2)
-        this.triggerEvent('onchange', this._state.date1, this._state.date2)
         this.Hide()
     }
 
@@ -563,6 +594,8 @@ export class ScrollDateBase {
     // }
 
     private apply(date1: Date, date2: Date) {
+        const isChanged = date1 !== this._state.date1 || date2 !== this._state.date2
+
         this._state.date1 = date1
         const txt1 = getDatePickerPlaceholderDate(this._state.date1)
         this._targets.dateFromInput.placeholder = txt1
@@ -575,6 +608,10 @@ export class ScrollDateBase {
             this._targets.dateToInput.placeholder = txt2
             const isoDate2 = getDateISOFormat(this._state.date2)
             this._targets.dateToInput.value = isoDate2
+        }
+
+        if (isChanged) {
+            this.triggerEvent('onchange', this._state.date1, this._state.date2)
         }
     }
 
@@ -726,7 +763,7 @@ export class ScrollDateBase {
         })
     }
 
-    private addDays(dt, days) {
+    private addDays(dt: Date, days: number) {
         var date = new Date(dt.valueOf());
         date.setDate(date.getDate() + days);
         return date;
