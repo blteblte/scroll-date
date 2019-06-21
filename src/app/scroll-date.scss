@@ -25,6 +25,12 @@ $z-index-date-picker-title: 10001;
     transform: translateX(-100%);
     overflow-x: hidden;
     overflow-y: auto;
+    direction: ltr;
+
+    &.rtl {
+        direction: rtl;
+    }
+
     &.auto-submit {
         .scroll-date__ui {
             display: none;
