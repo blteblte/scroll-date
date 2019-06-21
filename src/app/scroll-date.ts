@@ -55,17 +55,17 @@ export class ScrollDate extends ScrollDateBase {
 
     /**
      * Set from date
-     * @param {Date} d
+     * @param {string | Date} d
      */
-    public SetFromDate(d: Date) {
+    public SetFromDate(d: string | Date) {
         super.SetFromDate(d)
     }
 
     /**
      * Set to date
-     * @param {Date} d
+     * @param {string | Date} d
      */
-    public SetToDate(d: Date) {
+    public SetToDate(d: string | Date) {
         super.SetToDate(d)
     }
 

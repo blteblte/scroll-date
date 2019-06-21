@@ -238,16 +238,22 @@ export class ScrollDateBase {
         return this._state.date2
     }
 
-    protected SetFromDate(d: Date) {
-        d.setHours(0, 0, 0, 0)
+    protected SetFromDate(d: string | Date) {
+        if (typeof d === 'string' || d instanceof String) {
+            d = parseDate(d as string)
+            d.setHours(0, 0, 0, 0)
+        }
         this._state.date1 = d
         this.updateCalendarSelectFirstDate(d)
         this.apply(this._state.date1, this._state.date2)
         this._state.selectingCount = 0
     }
 
-    protected SetToDate(d: Date) {
-        d.setHours(0, 0, 0, 0)
+    protected SetToDate(d: string | Date) {
+        if (typeof d === 'string' || d instanceof String) {
+            d = parseDate(d as string)
+            d.setHours(0, 0, 0, 0)
+        }
         this._state.date2 = d
         this.updateCalendarSelectSecondDate(d)
         this.apply(this._state.date1, this._state.date2)
