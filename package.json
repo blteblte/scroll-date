@@ -4,9 +4,9 @@
   "description": "",
   "main": "./src/app/app.ts",
   "scripts": {
-    "start": "SET NODE_ENV=development && webpack-dev-server --config webpack.dev.js --open",
-    "buildDev": "SET NODE_ENV=development && webpack --config webpack.dev.js",
-    "buildProd": "SET NODE_ENV=production && webpack --config webpack.prod.js"
+    "start": "webpack-dev-server --config webpack.dev.js --open",
+    "buildDev": "webpack --config webpack.dev.js",
+    "buildProd": "webpack --config webpack.prod.js"
   },
   "author": "",
   "license": "ISC",
