@@ -133,6 +133,66 @@ export const translations = {
     selectDates: 'בחר תאריכים',
     selectThisDate: 'בחר תאריך זה',
     selectTheseDates: 'בחר תאריכים אלה'
-  }
+  } as Translation,
+
+  lv: {
+    month: [
+      'Janvāris',
+      'Februāris',
+      'Marts',
+      'Aprīlis',
+      'Maijs',
+      'Jūnijs',
+      'Jūlijs',
+      'Augusts',
+      'Septembris',
+      'Oktobris',
+      'Novembris',
+      'Decembris'
+    ],
+    weekday: [
+      'P',
+      'O',
+      'T',
+      'C',
+      'P',
+      'Se',
+      'Sv'
+    ],
+    selectDate: 'Izvēlies datumu',
+    selectDates: 'Izvēlies datumus',
+    selectThisDate: 'Pieņemt izvēlēto datumu',
+    selectTheseDates: 'Pieņemt izvēlētos datumus'
+  } as Translation,
+
+  lvShort: {
+    month: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'Mai',
+      'Jun',
+      'Jūl',
+      'Aug',
+      'Sep',
+      'Okt',
+      'Nov',
+      'Dec'
+    ],
+    weekday: [
+      'P',
+      'O',
+      'T',
+      'C',
+      'P',
+      'S',
+      'S'
+    ],
+    selectDate: 'Izvēlies datumu',
+    selectDates: 'Izvēlies datumus',
+    selectThisDate: 'Pieņemt izvēlēto datumu',
+    selectTheseDates: 'Pieņemt izvēlētos datumus'
+  } as Translation
 
 }
