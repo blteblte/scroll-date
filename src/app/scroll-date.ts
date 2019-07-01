@@ -179,4 +179,18 @@ export class ScrollDate extends ScrollDateBase {
     public RemoveEventListener(eventType: EventType, eventListener: EventListenerType) {
         super.RemoveEventListener(eventType, eventListener)
     }
+
+    /**
+     * Set datepicker into single date select mode (from date-range mode)
+     */
+    public SetSingleDateMode() {
+        super.SetSingleDateMode()
+    }
+
+    /**
+     * Set datepicker into date-range select mode
+     */
+    public SetDateRangeMode() {
+        super.SetDateRangeMode()
+    }
 }
