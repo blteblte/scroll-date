@@ -24,6 +24,7 @@
   background: #fff;
   opacity: 0;
   z-index: -1;
+  -webkit-transition: all .3s;
   transition: all .3s;
   right: 0;
   -webkit-transform: translateX(-100%);
@@ -75,6 +76,7 @@
     .scroll-date.list-mode .scroll-date__container {
       box-sizing: border-box;
       position: relative;
+      display: -webkit-box;
       display: flex;
       justify-content: space-around;
       overflow: hidden;
@@ -175,6 +177,7 @@
     top: 0;
     left: 0;
     opacity: 0;
+    -webkit-transition: .3s all .3s;
     transition: .3s all .3s;
     /*z-index: -1;*/ }
   .scroll-date.visible .scroll-date__overflow {
@@ -258,6 +261,7 @@
         display: block;
         padding: 15px;
         cursor: pointer;
+        -webkit-transition: -webkit-transform .15s;
         transition: -webkit-transform .15s;
         transition: transform .15s;
         transition: transform .15s, -webkit-transform .15s;
@@ -301,10 +305,12 @@
         cursor: pointer; }
       .scroll-date .calendar td div {
         padding: 15px 12px;
+        -webkit-transition: all .14s;
         transition: all .14s; }
         .scroll-date .calendar td div:hover {
           background: #07a2ba;
           color: #fff;
+          -webkit-transition: none;
           transition: none; }
       .scroll-date .calendar td.invalid div:hover {
         background: #fff;

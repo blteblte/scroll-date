@@ -75,14 +75,15 @@ export class ScrollDateBase {
   protected constructor(
       protected host: HTMLElement
       , userOptions: Options = ({} as any)
+      , contextContainer: Document | Element = document
   ) {
       /* set reference to this class on the element it self */
       host['ScrollDate'] = this
 
-      this.init(userOptions)
+      this.init(userOptions, contextContainer)
   }
 
-  private async init(userOptions: Options) {
+  private async init(userOptions: Options, contextContainer) {
       this.events = []
 
       /* set default */
@@ -101,14 +102,14 @@ export class ScrollDateBase {
       this.options = parseOptions(this.options)
 
       if (typeof this.options.from === 'string') {
-          this._targets.dateFromInput = document.querySelector(this.options.from)
+          this._targets.dateFromInput = contextContainer.querySelector(this.options.from)
       } else {
           this._targets.dateFromInput = this.options.from
       }
 
       if (this.options.to) {
           if (typeof this.options.to === 'string') {
-              this._targets.dateToInput = document.querySelector(this.options.to)
+              this._targets.dateToInput = contextContainer.querySelector(this.options.to)
           } else {
               this._targets.dateToInput = this.options.to
           }

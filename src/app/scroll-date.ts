@@ -13,8 +13,9 @@ export class ScrollDate extends ScrollDateBase {
     public constructor(
         protected host: HTMLElement
         , userOptions: Options = ({} as any)
+        , contextContainer: Document | Element = document
     ) {
-        super(host, userOptions)
+        super(host, userOptions, contextContainer)
     }
 
     /**
