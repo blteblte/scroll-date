@@ -236,6 +236,10 @@ export class ScrollDateBase {
       this._state.selectingCount = 0
   }
 
+  protected GetStartDate() {
+      return this._state.startDate
+  }
+
   protected FromDateNext() {
       this.SetFromDate(this.addDays(this._state.date1, +1))
   }
@@ -700,6 +704,10 @@ export class ScrollDateBase {
               !dt.ref.classList.contains('invalid') && dt.ref.classList.add('invalid')
           } else {
               dt.ref.classList.contains('invalid') && dt.ref.classList.remove('invalid')
+          }
+
+          if (isDatesEqual(dt.date, this._state.startDate)) {
+            dt.ref.classList.contains('invalid') && dt.ref.classList.remove('invalid')
           }
       })
   }

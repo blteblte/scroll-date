@@ -27,6 +27,13 @@ export class ScrollDate extends ScrollDateBase {
     }
 
     /**
+     * Get datepicker start date
+     */
+    public GetStartDate() {
+        return super.GetStartDate()
+    }
+
+    /**
      * Set enabled starting date to Today
      */
     public ClearStartDate() {
