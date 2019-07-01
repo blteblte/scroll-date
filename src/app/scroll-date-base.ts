@@ -616,7 +616,6 @@ export class ScrollDateBase {
   }
 
   private apply(date1: Date, date2: Date) {
-      console.log('apply....', { date1, date2 })
       this._state.date1 = date1
       const txt1 = getDatePickerPlaceholderDate(this._state.date1)
       this._targets.dateFromInput.placeholder = txt1
