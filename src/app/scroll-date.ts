@@ -80,28 +80,28 @@ export class ScrollDate extends ScrollDateBase {
     /**
      * Increase from date by 1 day
      */
-    protected FromDateNext() {
+    public FromDateNext() {
         super.FromDateNext()
     }
 
     /**
      * Decrease from date by 1 day
      */
-    protected FromDatePrev() {
+    public FromDatePrev() {
         super.FromDatePrev()
     }
 
     /**
      * Increase to date by 1 day
      */
-    protected ToDateNext() {
+    public ToDateNext() {
         super.ToDateNext()
     }
 
     /**
      * Decrease to date by 1 day
      */
-    protected ToDatePrev() {
+    public ToDatePrev() {
         super.ToDatePrev()
     }
 
@@ -129,14 +129,14 @@ export class ScrollDate extends ScrollDateBase {
     /**
      * Show datepicker
      */
-    protected async Show() {
+    public async Show() {
         await super.Show()
     }
 
     /**
      * Re-render and re-bind the datepicker
      */
-    protected async Render() {
+    public async Render() {
         await super.Render()
     }
 
@@ -175,7 +175,7 @@ export class ScrollDate extends ScrollDateBase {
      * @param {string} eventType event name
      * @param eventListener event listener delegage reference
      */
-    protected AddEventListener(eventType: EventType, eventListener: EventListenerType) {
+    public AddEventListener(eventType: EventType, eventListener: EventListenerType) {
         super.AddEventListener(eventType, eventListener)
     }
 
