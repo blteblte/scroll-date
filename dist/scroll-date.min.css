@@ -24,11 +24,9 @@
   background: #fff;
   opacity: 0;
   z-index: -1;
-  -webkit-transition: all .3s;
   transition: all .3s;
   right: 0;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
+  transform: translateX(-100%);
   overflow-x: hidden;
   overflow-y: auto;
   direction: ltr; }
@@ -44,8 +42,7 @@
     width: 100%;
     max-width: 1200px;
     min-width: 800px;
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
     overflow: hidden;
     padding-top: 0px;
     bottom: auto;
@@ -76,7 +73,6 @@
     .scroll-date.list-mode .scroll-date__container {
       box-sizing: border-box;
       position: relative;
-      display: -webkit-box;
       display: flex;
       justify-content: space-around;
       overflow: hidden;
@@ -124,13 +120,11 @@
         .scroll-date.list-mode .scroll-date__container .scroll-date__list-mode-controls .prev {
           float: left; }
           .scroll-date.list-mode .scroll-date__container .scroll-date__list-mode-controls .prev:before {
-            -webkit-transform: rotate(45deg);
-                    transform: rotate(45deg); }
+            transform: rotate(45deg); }
         .scroll-date.list-mode .scroll-date__container .scroll-date__list-mode-controls .next {
           float: right; }
           .scroll-date.list-mode .scroll-date__container .scroll-date__list-mode-controls .next:before {
-            -webkit-transform: rotate(-135deg);
-                    transform: rotate(-135deg); }
+            transform: rotate(-135deg); }
       .scroll-date.list-mode .scroll-date__container .scroll-date__submit-container {
         text-align: center; }
   .scroll-date.rtl.list-mode .scroll-date__list-mode-controls .prev:before, .scroll-date.rtl.list-mode .scroll-date__list-mode-controls .next:before {
@@ -144,24 +138,19 @@
   .scroll-date.rtl.list-mode .scroll-date__list-mode-controls .prev {
     float: right; }
     .scroll-date.rtl.list-mode .scroll-date__list-mode-controls .prev:before {
-      -webkit-transform: rotate(-135deg);
-              transform: rotate(-135deg); }
+      transform: rotate(-135deg); }
   .scroll-date.rtl.list-mode .scroll-date__list-mode-controls .next {
     float: left; }
     .scroll-date.rtl.list-mode .scroll-date__list-mode-controls .next:before {
-      -webkit-transform: rotate(45deg);
-              transform: rotate(45deg); }
+      transform: rotate(45deg); }
   .scroll-date.out {
     display: none; }
   .scroll-date.rtl {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%); }
+    transform: translateX(100%); }
   .scroll-date.rtl.list-mode {
-    -webkit-transform: none;
-            transform: none; }
+    transform: none; }
   .scroll-date.visible {
-    -webkit-transform: none;
-            transform: none;
+    transform: none;
     opacity: 1;
     z-index: 10000;
     /*display: block;*/ }
@@ -177,7 +166,6 @@
     top: 0;
     left: 0;
     opacity: 0;
-    -webkit-transition: .3s all .3s;
     transition: .3s all .3s;
     /*z-index: -1;*/ }
   .scroll-date.visible .scroll-date__overflow {
@@ -261,15 +249,10 @@
         display: block;
         padding: 15px;
         cursor: pointer;
-        -webkit-transition: -webkit-transform .15s;
-        transition: -webkit-transform .15s;
         transition: transform .15s;
-        transition: transform .15s, -webkit-transform .15s;
-        -webkit-transform: none;
-                transform: none; }
+        transform: none; }
         .scroll-date__ui--submit-container__submit.flash {
-          -webkit-transform: scale(0.96, 0.96);
-                  transform: scale(0.96, 0.96); }
+          transform: scale(0.96, 0.96); }
   .scroll-date.rtl .scroll-date__ui--dates--to:before {
     right: 1px; }
   .scroll-date .calendar {
@@ -305,12 +288,10 @@
         cursor: pointer; }
       .scroll-date .calendar td div {
         padding: 15px 12px;
-        -webkit-transition: all .14s;
         transition: all .14s; }
         .scroll-date .calendar td div:hover {
           background: #07a2ba;
           color: #fff;
-          -webkit-transition: none;
           transition: none; }
       .scroll-date .calendar td.invalid div:hover {
         background: #fff;

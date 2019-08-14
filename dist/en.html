@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>scroll-date</title>
   <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet">
-</head>
-<body style="direction: rtl;">
+<link href="scroll-date.min.css" rel="stylesheet"></head>
+<body>
 
   <style>
     input { padding: 16px; outline: none; }
@@ -23,16 +23,20 @@
     }
   </style>
 
+  <div>
+    <a href="/he.html">RTL Example</a>
+  </div>
+
       <form method="GET">
         <fieldset class="container">
           <legend>Classic - Desktop</legend>
 
-            <label for="from-date-list">עזיבה:</label>
+            <label for="from-date-list">from:</label>
             <input type="text" id="from-date-list" name="from-date" />
 
-            <label for="to-date-list">הגעה:</label>
+            <label for="to-date-list">to:</label>
             <input type="text" id="to-date-list" name="to-date" />
-            <scroll-date id="classic" from="#from-date-list" to="#to-date-list" rtl="true" lang="heShort" list-mode="true" auto-submit="false" month-count="5"></scroll-date>
+            <scroll-date id="classic" from="#from-date-list" to="#to-date-list" list-mode="true" auto-submit="false" month-count="5"></scroll-date>
 
             <input type="submit" />
         </fieldset>
@@ -42,9 +46,9 @@
         <fieldset class="container">
           <legend>Classic Single - Desktop</legend>
 
-            <label for="from-date-list-single">עזיבה:</label>
+            <label for="from-date-list-single">from:</label>
             <input type="text" id="from-date-list-single" name="from-date" />
-            <scroll-date id="classic-single" from="#from-date-list-single" rtl="true" lang="heShort" list-mode="true" auto-submit="false" month-count="5"></scroll-date>
+            <scroll-date id="classic-single" from="#from-date-list-single" list-mode="true" auto-submit="false" month-count="5"></scroll-date>
 
             <input type="submit" />
         </fieldset>
@@ -58,12 +62,12 @@
     <fieldset class="container">
         <legend>Scroll - Mobile</legend>
 
-        <label for="from-date">עזיבה:</label>
+        <label for="from-date">from:</label>
         <input type="text" id="from-date" name="from-date" />
 
-        <label for="to-date">הגעה:</label>
+        <label for="to-date">to:</label>
         <input type="text" id="to-date" name="to-date" />
-        <scroll-date id="scroll" from="#from-date" to="#to-date" rtl="true" lang="he"></scroll-date>
+        <scroll-date id="scroll" from="#from-date" to="#to-date"></scroll-date>
 
         <input type="submit" />
     </fieldset>
@@ -73,13 +77,13 @@
     <fieldset class="container">
         <legend>Scroll Single - Mobile</legend>
 
-        <label for="from-date-single">עזיבה:</label>
+        <label for="from-date-single">from:</label>
         <input type="text" id="from-date-single" name="from-date" />
-        <scroll-date id="scroll-single" from="#from-date-single" rtl="true" lang="he"></scroll-date>
+        <scroll-date id="scroll-single" from="#from-date-single"></scroll-date>
 
         <input type="submit" />
     </fieldset>
   </form>
 
-</body>
+<script type="text/javascript" src="scroll-date.min.js"></script></body>
 </html>

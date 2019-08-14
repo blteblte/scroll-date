@@ -3,6 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
+let multiplesFiles = [
+  { name: 'en', title: 'English Example', path: './src/en.html' },
+  { name: 'he', title: 'Hebrew Example', path: './src/he.html' }
+].map(file => (new HtmlWebpackPlugin({
+    title: file.title,
+    filename: file.name + '.html',
+    template: `${file.path}`
+})));
+
 module.exports = {
   entry: {
     ['scroll-date']: './src/app/app.ts'
@@ -32,10 +41,7 @@ module.exports = {
       extensions: ['.ts', '.tsx', '.js']
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Production',
-      template: './src/index.html'
-    }),
+    ...multiplesFiles,
     new MiniCssExtractPlugin({
         filename: '[name].min.css',
         chunkFilename: 'chunks/[id].css'
