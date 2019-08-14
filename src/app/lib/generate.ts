@@ -1,6 +1,12 @@
 import { translations } from '../translations';
 
-function calendar(month, y, lang): Promise<string> {
+function addDays(dt: Date, days: number) {
+    var date = new Date(dt.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+function calendar(month, y, lang, weekStartsWith: number): Promise<string> {
     return new Promise((resolve) => {
         //Variables to be used later.  Place holders right now.
         var padding = "";
@@ -46,6 +52,9 @@ function calendar(month, y, lang): Promise<string> {
         //////////////////////////////////////////
 
         var tempDate = new Date(`${year}-${tempMonth < 10 ? '0' + tempMonth : tempMonth}-01`);
+
+        tempDate = addDays(tempDate, Math.abs(weekStartsWith - 7))
+
         var tempweekday = tempDate.getDay();
         var tempweekday2 = tempweekday;
         var dayAmount: any = totalDays[month];
@@ -108,8 +117,17 @@ function calendar(month, y, lang): Promise<string> {
         // name and days of the week.		//
         /////////////////////////////////////////
 
+        const weekDaysIndexes = [0, 1, 2, 3, 4, 5, 6]
+        for(let i = 0; i < weekStartsWith; i++) {
+            weekDaysIndexes.push(weekDaysIndexes.shift());
+        }
+
+        const weekDayNamesStr = weekDaysIndexes.reduce((acc, next) => {
+            return acc += `<td>${dayNames[next]}</td>`
+        }, '')
+
         var calendarTable = "<table class='calendar'> <tr class='currentmonth'><th colspan='7'>" + monthNames[month] + " " + year + "</th></tr>";
-        calendarTable += `<tr class='weekdays'>  <td>${dayNames[0]}</td>  <td>${dayNames[1]}</td> <td>${dayNames[2]}</td> <td>${dayNames[3]}</td> <td>${dayNames[4]}</td> <td>${dayNames[5]}</td> <td>${dayNames[6]}</td> </tr>`;
+        calendarTable += `<tr class='weekdays'>${weekDayNamesStr}</tr>`;
         calendarTable += "<tr>";
         calendarTable += padding;
         calendarTable += "</tr></table>";
@@ -117,13 +135,13 @@ function calendar(month, y, lang): Promise<string> {
     })
 }
 
-export async function generateCalendarHTML(startDate: Date, countOfMonths: number = 12, lang) {
+export async function generateCalendarHTML(startDate: Date, countOfMonths: number = 12, lang, weekStartsWith: number) {
     var html = ''
     var currentDate = startDate
     /* escape any edge cases */
     var tmpDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 5);
     for (let i = 0; i < countOfMonths; i++) {
-        html += await calendar(tmpDate.getMonth(), tmpDate.getFullYear(), lang)
+        html += await calendar(tmpDate.getMonth(), tmpDate.getFullYear(), lang, weekStartsWith)
         tmpDate.setMonth(tmpDate.getMonth() + 1)
     }
     return html;

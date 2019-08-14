@@ -36,7 +36,7 @@
 
             <label for="to-date-list">to:</label>
             <input type="text" id="to-date-list" name="to-date" />
-            <scroll-date id="classic" from="#from-date-list" to="#to-date-list" list-mode="true" auto-submit="false" month-count="12"></scroll-date>
+            <scroll-date id="classic" from="#from-date-list" to="#to-date-list" list-mode="true" auto-submit="false" month-count="12" week-starts-with="1"></scroll-date>
 
             <input type="submit" />
         </fieldset>
@@ -48,7 +48,7 @@
 
             <label for="from-date-list-single">from:</label>
             <input type="text" id="from-date-list-single" name="from-date" />
-            <scroll-date id="classic-single" from="#from-date-list-single" list-mode="true" auto-submit="false" month-count="12"></scroll-date>
+            <scroll-date id="classic-single" from="#from-date-list-single" list-mode="true" auto-submit="false" month-count="12" week-starts-with="1"></scroll-date>
 
             <input type="submit" />
         </fieldset>
@@ -67,7 +67,7 @@
 
         <label for="to-date">to:</label>
         <input type="text" id="to-date" name="to-date" />
-        <scroll-date id="scroll" from="#from-date" to="#to-date"></scroll-date>
+        <scroll-date id="scroll" from="#from-date" to="#to-date" week-starts-with="1"></scroll-date>
 
         <input type="submit" />
     </fieldset>
@@ -79,7 +79,7 @@
 
         <label for="from-date-single">from:</label>
         <input type="text" id="from-date-single" name="from-date" />
-        <scroll-date id="scroll-single" from="#from-date-single"></scroll-date>
+        <scroll-date id="scroll-single" from="#from-date-single" week-starts-with="1"></scroll-date>
 
         <input type="submit" />
     </fieldset>

@@ -14,6 +14,7 @@ export interface Options {
   visibleByDefault: boolean
   autoSubmit: boolean
   translation: Translation
+  weekStartsWith: number
 }
 
 export const defaultOptions: Options = {
@@ -29,6 +30,7 @@ export const defaultOptions: Options = {
   , visibleByDefault: false
   , autoSubmit: false
   , translation: null
+  , weekStartsWith: 7 /* sunday by default */
 }
 
 export function parseOptions(obj: Options): Options {
@@ -67,6 +69,17 @@ export function parseOptions(obj: Options): Options {
 
   if (typeof obj.translation === 'string') {
     obj.translation = JSON.parse(obj.translation)
+  }
+
+  if (typeof obj.weekStartsWith === 'string') {
+    obj.weekStartsWith = parseInt(obj.weekStartsWith, 10)
+  }
+
+  if (obj.weekStartsWith < 1) {
+    obj.weekStartsWith = 1
+  }
+  else if (obj.weekStartsWith > 7){
+    obj.weekStartsWith = 7
   }
 
   return obj
