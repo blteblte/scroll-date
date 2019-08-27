@@ -15,6 +15,7 @@ export interface Options {
   autoSubmit: boolean
   translation: Translation
   weekStartsWith: number
+  showOverflow: boolean
 }
 
 export const defaultOptions: Options = {
@@ -31,6 +32,7 @@ export const defaultOptions: Options = {
   , autoSubmit: false
   , translation: null
   , weekStartsWith: 7 /* sunday by default */
+  , showOverflow: true
 }
 
 export function parseOptions(obj: Options): Options {
@@ -80,6 +82,10 @@ export function parseOptions(obj: Options): Options {
   }
   else if (obj.weekStartsWith > 7){
     obj.weekStartsWith = 7
+  }
+
+  if (typeof obj.showOverflow === 'string') {
+    obj.showOverflow = obj.showOverflow === 'true' || obj.showOverflow === '1'
   }
 
   return obj

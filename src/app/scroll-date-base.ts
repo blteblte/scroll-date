@@ -316,6 +316,25 @@ export class ScrollDateBase {
       return this._state.singleDateMode
   }
 
+  private hideOnClickOutside() {
+    const outsideClickListener = event => {
+        const isOutsideElements =
+               !this._dom.container.contains(event.target)
+            && this._targets.dateFromInput !== event.target
+            && (!this._targets.dateToInput || this._targets.dateToInput !== event.target)
+        if (isOutsideElements && this.Visible()) {
+          this.Hide()
+          removeClickListener()
+        }
+    }
+
+    const removeClickListener = () => {
+        document.removeEventListener('click', outsideClickListener)
+    }
+
+    document.addEventListener('click', outsideClickListener)
+}
+
   protected async Hide() {
       if (!this.Visible()) { return }
 
@@ -334,6 +353,8 @@ export class ScrollDateBase {
 
   protected async Show() {
       if (this.Visible()) { return }
+
+      !this.options.showOverflow && this.hideOnClickOutside()
 
       const { datepickerWrapper } = this._dom
       this.SetFromDate(this._state.date1)
@@ -542,6 +563,9 @@ export class ScrollDateBase {
       overflow.className = 'scroll-date__overflow'
       this._dom.datepickerWrapper.appendChild(overflow)
       overflow.addEventListener('click', () => this.Hide())
+      if (!this.options.showOverflow) {
+        overflow.style.display = 'none'
+      }
 
       this._dom.datepickerWrapper.appendChild(headerContainer)
       this._dom.datepickerWrapper.appendChild(this._dom.datepickerContainer)
