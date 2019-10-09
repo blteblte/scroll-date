@@ -101,6 +101,10 @@ export class ScrollDateBase {
       this.options = { ...scrollDateOptions, ...userOptions }
       this.options = parseOptions(this.options)
 
+      if (this.options.inlineMode) {
+          this.options.showOverflow = false
+      }
+
       if (typeof this.options.from === 'string') {
           this._targets.dateFromInput = contextContainer.querySelector(this.options.from)
       } else {
@@ -336,6 +340,7 @@ export class ScrollDateBase {
 }
 
   protected async Hide() {
+    if (this.options.inlineMode) { return }
       if (!this.Visible()) { return }
 
       const { datepickerWrapper } = this._dom
@@ -352,6 +357,7 @@ export class ScrollDateBase {
   }
 
   protected async Show() {
+      if (this.options.inlineMode) { return }
       if (this.Visible()) { return }
 
       !this.options.showOverflow && this.hideOnClickOutside()
@@ -390,6 +396,10 @@ export class ScrollDateBase {
 
       if (this.options.autoSubmit && !datepickerWrapper.classList.contains('auto-submit')) {
           datepickerWrapper.classList.add('auto-submit')
+      }
+
+      if (this.options.inlineMode) {
+          datepickerWrapper.classList.add('inline-mode')
       }
 
       await this.render(this.options.startDate, this.options.monthCount, this.host, true, this.options.rtl)
@@ -455,16 +465,21 @@ export class ScrollDateBase {
   }
 
   protected SetListDatePageByIndex(index: number) {
+      const { options } = this
       const maxIndex = this._dom.calendars.length - 1
 
       if (index < 0) { index = 0 }
 
       let firstIndex = index
-      let secondIndex = index + 1
+      let secondIndex = options.listMode === 'single'
+        ? index
+        : index + 1
 
       if (secondIndex > maxIndex) {
           secondIndex = maxIndex
-          firstIndex = maxIndex - 1
+          firstIndex = options.listMode === 'single'
+            ? maxIndex
+            : maxIndex - 1
       }
 
       this._state.listModePageIndex = firstIndex

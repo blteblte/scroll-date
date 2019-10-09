@@ -85,5 +85,33 @@
     </fieldset>
   </form>
 
+  <form method="GET">
+    <fieldset class="container">
+      <legend>Always Visible</legend>
+
+        <label for="from-date-list-v">עזיבה:</label>
+        <input type="text" id="from-date-list-v" name="from-date" />
+
+        <label for="to-date-list-v">הגעה:</label>
+        <input type="text" id="to-date-list-v" name="to-date" />
+        <scroll-date id="classic-v" from="#from-date-list-v" to="#to-date-list-v" list-mode="true" auto-submit="true" month-count="12" week-starts-with="1" inline-mode="true" rtl="true" lang="heShort"></scroll-date>
+
+        <input type="submit" />
+    </fieldset>
+  </form>
+
+
+  <form method="GET">
+    <fieldset class="container">
+      <legend>Always Visible - Single Calendar single select</legend>
+
+        <label for="from-date-list-vs">עזיבה:</label>
+        <input type="text" id="from-date-list-vs" name="from-date" />
+
+        <scroll-date id="classic-vs" from="#from-date-list-vs" list-mode="single" auto-submit="true" month-count="12" week-starts-with="1" inline-mode="true" rtl="true" lang="heShort"></scroll-date>
+
+        <input type="submit" />
+    </fieldset>
+
 </body>
 </html>

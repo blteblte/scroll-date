@@ -9,13 +9,14 @@ export interface Options {
   from: HTMLInputElement | string
   to: HTMLInputElement | string
   lang: string
-  listMode: boolean
+  listMode: boolean | string
   inOutTime: number
   visibleByDefault: boolean
   autoSubmit: boolean
   translation: Translation
   weekStartsWith: number
   showOverflow: boolean
+  inlineMode: boolean
 }
 
 export const defaultOptions: Options = {
@@ -33,6 +34,7 @@ export const defaultOptions: Options = {
   , translation: null
   , weekStartsWith: 7 /* sunday by default */
   , showOverflow: true
+  , inlineMode: false
 }
 
 export function parseOptions(obj: Options): Options {
@@ -54,7 +56,9 @@ export function parseOptions(obj: Options): Options {
   }
 
   if (typeof obj.listMode === 'string') {
-    obj.listMode = obj.listMode === 'true' || obj.listMode === '1'
+    if (obj.listMode !== 'single') {
+      obj.listMode = obj.listMode === 'true' || obj.listMode === '1'
+    }
   }
 
   if (typeof obj.inOutTime === 'string') {
@@ -86,6 +90,10 @@ export function parseOptions(obj: Options): Options {
 
   if (typeof obj.showOverflow === 'string') {
     obj.showOverflow = obj.showOverflow === 'true' || obj.showOverflow === '1'
+  }
+
+  if (typeof obj.inlineMode === 'string') {
+    obj.inlineMode = obj.inlineMode === 'true' || obj.inlineMode === '1'
   }
 
   return obj

@@ -183,6 +183,15 @@ $z-index-date-picker-title: 10001;
         display: none;
     }
 
+    &.inline-mode {
+        position: static;
+        display: block;
+        transform: none;
+        opacity: 1;
+        z-index: $z-index-date-picker;
+        transition: none;
+    }
+
     &.rtl {
         transform: translateX(100%);
     }
