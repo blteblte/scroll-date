@@ -266,6 +266,19 @@ $z-index-date-picker-title: 10001;
                 content: "×";
             }
         }
+
+        &--back-button {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 14px;
+            left:16px;
+
+            .rtl &{
+                left: auto;
+                right:16px;
+            }
+        }
     }
 
     &.rtl .scroll-date__header--close {
