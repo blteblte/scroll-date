@@ -99,7 +99,7 @@ export const translations = {
         'יום שבת'
     ],
     selectDate: 'בחר תאריך',
-    selectDates: 'בחר תאריכים',
+    selectDates: 'בחירת תאריכים',
     selectThisDate: 'בחר תאריך זה',
     selectTheseDates: 'בחר תאריכים אלה'
   } as Translation,
@@ -130,7 +130,7 @@ export const translations = {
         'ש\''
     ],
     selectDate: 'בחר תאריך',
-    selectDates: 'בחר תאריכים',
+    selectDates: 'בחירת תאריכים',
     selectThisDate: 'בחר תאריך זה',
     selectTheseDates: 'בחר תאריכים אלה'
   } as Translation,
