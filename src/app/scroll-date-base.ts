@@ -530,12 +530,18 @@ export class ScrollDateBase {
       this._dom.datepickerTitle = document.createElement('div')
       this._dom.datepickerTitle.className = 'scroll-date__header--title'
       this._dom.datepickerTitle.innerHTML = this.tr.selectDates
+
       const closeButton = document.createElement('span')
       closeButton.className = 'scroll-date__header--close'
       closeButton.addEventListener('click', () => this.Hide())
 
+      const backButton = document.createElement('span')
+      backButton.className = 'scroll-date__header--back-button'
+      backButton.addEventListener('click', () => this.Hide())
+
       headerContainer.appendChild(this._dom.datepickerTitle)
       headerContainer.appendChild(closeButton)
+      headerContainer.appendChild(backButton)
 
       /* datepicker */
       this._dom.datepickerContainer = document.createElement('div')
