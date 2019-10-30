@@ -5,11 +5,12 @@ import { ScrollDateBase } from './scroll-date-base';
 import { Options } from './options';
 import { EventType } from './models/EventType';
 import { EventListenerType } from './models/EventListenerType';
+import { IScrollDate } from './i-scroll-date';
 
 /**
  * Scrollable datepicker
  */
-export class ScrollDate extends ScrollDateBase {
+export class ScrollDate extends ScrollDateBase implements IScrollDate {
     public constructor(
         protected host: HTMLElement
         , userOptions: Options = ({} as any)

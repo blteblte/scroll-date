@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -25,6 +26,11 @@ module.exports = merge(common, {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CopyPlugin([
+      { from: './src/app/i-scroll-date.ts', to: 'i-scroll-date.ts' },
+      { from: './src/app/models/EventType.ts', to: 'models/EventType.ts' },
+      { from: './src/app/models/EventListenerType.ts', to: 'models/EventListenerType.ts' }
+    ])
   ]
 });
