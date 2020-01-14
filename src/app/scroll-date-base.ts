@@ -394,6 +394,10 @@ export class ScrollDateBase {
           datepickerWrapper.classList.add('list-mode')
       }
 
+      if (this.options.listMode === 'single') {
+        datepickerWrapper.classList.add('single-callendar')
+      }
+
       if (this.options.autoSubmit && !datepickerWrapper.classList.contains('auto-submit')) {
           datepickerWrapper.classList.add('auto-submit')
       }
