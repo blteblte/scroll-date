@@ -17,6 +17,7 @@ export interface Options {
   weekStartsWith: number
   showOverflow: boolean
   inlineMode: boolean
+  contextElement: HTMLElement | string
 }
 
 export const defaultOptions: Options = {
@@ -35,6 +36,7 @@ export const defaultOptions: Options = {
   , weekStartsWith: 7 /* sunday by default */
   , showOverflow: true
   , inlineMode: false
+  , contextElement: null
 }
 
 export function parseOptions(obj: Options): Options {

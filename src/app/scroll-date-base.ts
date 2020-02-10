@@ -119,6 +119,10 @@ export class ScrollDateBase {
           }
       }
 
+      if (this.options.contextElement && typeof this.options.contextElement === 'string') {
+          this.options.contextElement = document.querySelector(this.options.contextElement) as HTMLElement
+      }
+
       if (!this._targets.dateToInput) {
           this._state.singleDateMode = true
       }
@@ -326,6 +330,11 @@ export class ScrollDateBase {
                !this._dom.container.contains(event.target)
             && this._targets.dateFromInput !== event.target
             && (!this._targets.dateToInput || this._targets.dateToInput !== event.target)
+            && (!this.options.contextElement || (
+                this.options.contextElement
+                &&
+                !(this.options.contextElement as HTMLElement).contains(event.target)
+            ))
         if (isOutsideElements && this.Visible()) {
           this.Hide()
           removeClickListener()
