@@ -249,19 +249,35 @@ export class ScrollDateBase {
   }
 
   protected FromDateNext() {
-      this.SetFromDate(this.addDays(this._state.date1, +1))
+      const newDate = this.addDays(this._state.date1, +1)
+      this.SetFromDate(newDate)
+      if (!this.IsSingleDateMode()) {
+        this.SetListDatePageByDate(newDate)
+      }
   }
 
   protected FromDatePrev() {
-      this.SetFromDate(this.addDays(this._state.date1, -1))
+      const newDate = this.addDays(this._state.date1, -1)
+      this.SetFromDate(newDate)
+      if (!this.IsSingleDateMode()) {
+        this.SetListDatePageByDate(newDate)
+      }
   }
 
   protected ToDateNext() {
-      this.SetToDate(this.addDays(this._state.date2, +1))
+      const newDate = this.addDays(this._state.date2, +1)
+      this.SetToDate(newDate)
+      if (!this.IsSingleDateMode()) {
+        this.SetListDatePageByDate(newDate)
+      }
   }
 
   protected ToDatePrev() {
-      this.SetToDate(this.addDays(this._state.date2, -1))
+      const newDate = this.addDays(this._state.date2, -1)
+      this.SetToDate(newDate)
+      if (!this.IsSingleDateMode()) {
+        this.SetListDatePageByDate(newDate)
+      }
   }
 
   protected ClearStartDate() {
@@ -293,6 +309,17 @@ export class ScrollDateBase {
       if (this._state.startDate > d) { return }
       this._state.date1 = d
       this.updateCalendarSelectFirstDate(d)
+      if (this.IsSingleDateMode() && this._state.isRendered) {
+          this.updateCalendarSelectSecondDate(d)
+          if (this._dom.selectedMonthRef) {
+            const monthRefOffset = this._dom.selectedMonthRef.offsetTop
+            this._dom.datepickerContainer.scrollTop = monthRefOffset
+
+            if (this.options.listMode) {
+                this.SetListDatePageByDate(d)
+            }
+        }
+      }
       this.apply(this._state.date1, this._state.date2)
       this._state.selectingCount = 0
       if (d > this._state.date2) {
@@ -308,6 +335,17 @@ export class ScrollDateBase {
       if (this._state.startDate > d) { return }
       this._state.date2 = d
       this.updateCalendarSelectSecondDate(d)
+      if (this.IsSingleDateMode() && this._state.isRendered) {
+          this.updateCalendarSelectFirstDate(d)
+          if (this._dom.selectedMonthRef) {
+            const monthRefOffset = this._dom.selectedMonthRef.offsetTop
+            this._dom.datepickerContainer.scrollTop = monthRefOffset
+
+            if (this.options.listMode) {
+                this.SetListDatePageByDate(d)
+            }
+        }
+      }
       this.apply(this._state.date1, this._state.date2)
       this._state.selectingCount = 0
       if (d < this._state.date1) {
@@ -418,15 +456,15 @@ export class ScrollDateBase {
       await this.render(this.options.startDate, this.options.monthCount, this.host, true, this.options.rtl)
       await this.bind()
 
+      if (this.options.listMode) {
+        this.renderListMode()
+      }
+
       this.SetFromDate(this._state.date1)
       this.SetToDate(this._state.date2)
 
       if (this._state.singleDateMode) {
           this.SetSingleDateMode()
-      }
-
-      if (this.options.listMode) {
-          this.renderListMode()
       }
 
       if (this.options.visibleByDefault) {
