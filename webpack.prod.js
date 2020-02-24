@@ -30,7 +30,8 @@ module.exports = merge(common, {
     new CopyPlugin([
       { from: './src/app/i-scroll-date.ts', to: 'i-scroll-date.ts' },
       { from: './src/app/models/EventType.ts', to: 'models/EventType.ts' },
-      { from: './src/app/models/EventListenerType.ts', to: 'models/EventListenerType.ts' }
+      { from: './src/app/models/EventListenerType.ts', to: 'models/EventListenerType.ts' },
+      { from: './src/app/models/IDateData.ts', to: 'models/IDateData.ts' }
     ])
   ]
 });

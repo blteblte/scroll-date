@@ -6,11 +6,21 @@ import { Options } from './options';
 import { EventType } from './models/EventType';
 import { EventListenerType } from './models/EventListenerType';
 import { IScrollDate } from './i-scroll-date';
+import { IDateData } from './models/IDateData';
 
 /**
  * Scrollable datepicker
  */
 export class ScrollDate extends ScrollDateBase implements IScrollDate {
+
+    RenderDatesData(datesData: IDateData[]): Promise<void> {
+        return super.RenderDatesData(datesData)
+    }
+
+    ClearDatesData(): void {
+        super.ClearDatesData()
+    }
+
     public constructor(
         protected host: HTMLElement
         , userOptions: Options = ({} as any)

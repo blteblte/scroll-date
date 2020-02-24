@@ -23,6 +23,7 @@ import { Targets } from './models/Targets';
 import { State } from './models/State';
 import { Dom } from './models/Dom';
 import { isFunction } from 'util';
+import { IDateData } from './models/IDateData';
 
 
 export class ScrollDateBase {
@@ -64,7 +65,8 @@ export class ScrollDateBase {
       cachedDate2: null,
       listModePageIndex: null,
       onChangeDate1: null,
-      onChangeDate2: null
+      onChangeDate2: null,
+      mappedData: []
   }
 
   /**
@@ -921,4 +923,58 @@ export class ScrollDateBase {
               e.eventListener(date1, date2)
       })
   }
+
+    protected async RenderDatesData(datesData: IDateData[]): Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const { _dom, _state } = this
+                const { calendarDates } = _dom
+
+                this.ClearDatesData()
+
+                /* detach & normalize data */
+                const lastIndex = datesData.length - 1
+                datesData.forEach((obj, i) => {
+
+                    let date = obj.date
+                    if (typeof date === 'string' || date instanceof String) {
+                        date = parseDate(date as string)
+                        date.setHours(0, 0, 0, 0)
+                    } else {
+                        date.setHours(0, 0, 0, 0)
+                    }
+
+                    const dataContainer = document.createElement('div')
+                    dataContainer.classList.add('date-data')
+                    if (typeof obj.data === 'string' || obj.data instanceof String ) {
+                        dataContainer.innerHTML = obj.data as string
+                    } else {
+                        dataContainer.appendChild(obj.data as HTMLElement)
+                    }
+                    const data = dataContainer
+
+                    const node = calendarDates.find(x => x.date === date)
+
+                    const dataDataNormalized = { date, data, node }
+                    dataDataNormalized.node.ref.appendChild(dataDataNormalized.data)
+                    dataDataNormalized.node.ref.classList.add('has-data')
+
+                    _state.mappedData.push(dataDataNormalized)
+
+                    if (i === lastIndex) {
+                        resolve()
+                    }
+                })
+            }, 1);
+        })
+    }
+
+    protected ClearDatesData(): void {
+        const { _state } = this
+        _state.mappedData.forEach((mappedData) => {
+            mappedData.node.ref.removeChild(mappedData.data)
+            mappedData.node.ref.classList.remove('has-data')
+        })
+        _state.mappedData = []
+    }
 }

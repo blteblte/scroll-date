@@ -1,5 +1,6 @@
 import { EventType } from './models/EventType';
 import { EventListenerType } from './models/EventListenerType';
+import { IDateData } from './models/IDateData';
 
 export interface IScrollDate {
   /**
@@ -135,4 +136,15 @@ export interface IScrollDate {
    * Set datepicker into date-range select mode
    */
   SetDateRangeMode(): void
+
+  /**
+   * Render provided strings or DOM nodes to the specified dates td
+   * @param {IDateData} dateData dates data object array
+   */
+  RenderDatesData(datesData: IDateData[]): Promise<void>
+
+  /**
+   * Clear all previously rendered dates data
+   */
+  ClearDatesData(): void
 }

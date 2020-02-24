@@ -1,3 +1,5 @@
+import { IDateDataNormalized } from './IDateDataNormalized';
+
 export interface State {
   singleDateMode: boolean
   isRendered: boolean
@@ -10,4 +12,5 @@ export interface State {
   listModePageIndex: number
   onChangeDate1: Date
   onChangeDate2: Date
+  mappedData: IDateDataNormalized[]
 }
