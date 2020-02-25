@@ -1074,6 +1074,7 @@ export class ScrollDateBase {
         if (deselectDates) {
             this.SetFromDate(null)
             this.SetToDate(null)
+            this._state.selectingCount = 0
         }
 
         if (disableDatesWithoutData) {
