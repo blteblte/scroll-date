@@ -13,4 +13,5 @@ export interface Dom {
   calendars: HTMLElement[]
   listModePrev: HTMLElement
   listModeNext: HTMLElement
+  loader: HTMLElement
 }

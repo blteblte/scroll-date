@@ -1,3 +1,31 @@
+@mixin mixinVisibilityAnimation($time, $zindex, $transitionTransform: false) {
+    z-index: -1;
+    visibility: hidden;
+    opacity: 0;
+
+    &:not(.visible) {
+        @if $transitionTransform {
+            transition: visibility 0s ease-out $time, z-index $time ease-out 0s, opacity $time ease-out, transform $time ease-out;
+        }
+        @else {
+            transition: visibility 0s ease-out $time, z-index $time ease-out 0s, opacity $time ease-out;
+        }
+    }
+
+    &.visible {
+        z-index: $zindex;
+        visibility: visible;
+        opacity: 1;
+
+        @if $transitionTransform {
+            transition: visibility $time ease-in, opacity $time ease-in, transform $time ease-in;
+        }
+        @else {
+            transition: visibility $time ease-in, opacity $time ease-in;
+        }
+    }
+}
+
 $z-index-date-picker: 10000;
 $z-index-date-picker-title: 10001;
 
@@ -532,4 +560,30 @@ $z-index-date-picker-title: 10001;
         font-size: 12px;
         font-weight: 300;
     }
+
+    .scroll-date-loader {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include mixinVisibilityAnimation(.15s, 1, true);
+
+        svg {
+            transition: transform .15s ease-in-out;
+            transform: scale(.99, .99);
+            width: 60px;
+            margin: auto;
+
+            .visible & {
+                transform: none;
+            }
+        }
+    }
 }
+
+

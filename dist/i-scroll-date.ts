@@ -147,4 +147,14 @@ export interface IScrollDate {
    * Clear all previously rendered dates data
    */
   ClearDatesData(): void
+
+  /**
+   * Show datepicker's loader
+   */
+  ShowLoader(): void
+
+  /**
+   * Hide datepicker's loader
+   */
+  HideLoader(): void
 }

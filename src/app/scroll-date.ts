@@ -13,6 +13,14 @@ import { IDateData } from './models/IDateData';
  */
 export class ScrollDate extends ScrollDateBase implements IScrollDate {
 
+    public ShowLoader() {
+        super.ShowLoader()
+    }
+
+    public HideLoader() {
+        super.HideLoader()
+    }
+
     public RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean, deselectDates: boolean): Promise<void> {
         return super.RenderDatesData(datesData, disableDatesWithoutData, deselectDates)
     }

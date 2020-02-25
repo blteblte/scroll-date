@@ -51,7 +51,8 @@ export class ScrollDateBase {
       calendarDates: null,
       calendars: null,
       listModePrev: null,
-      listModeNext: null
+      listModeNext: null,
+      loader: null
   }
 
   private _state: State = {
@@ -131,6 +132,25 @@ export class ScrollDateBase {
 
       this._dom.datepickerWrapper = document.createElement('div')
       this._dom.datepickerWrapper.classList.add('scroll-date')
+
+      this._dom.loader = document.createElement('div')
+      this._dom.loader.classList.add('scroll-date-loader')
+      this._dom.loader.innerHTML = `<svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#000">
+            <g fill="none" fill-rule="evenodd">
+                <g transform="translate(1 1)" stroke-width="2">
+                    <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
+                    <path d="M36 18c0-9.94-8.06-18-18-18">
+                        <animateTransform attributeName="transform"
+                                            type="rotate"
+                                            from="0 18 18"
+                                            to="360 18 18"
+                                            dur="1s"
+                                            repeatCount="indefinite" />
+                    </path>
+                </g>
+            </g>
+        </svg>`
+      this._dom.datepickerWrapper.appendChild(this._dom.loader)
 
       this._state.zeroDate = this.options.zeroDate
       this._state.zeroDate.setHours(0, 0, 0, 0)
@@ -418,6 +438,14 @@ export class ScrollDateBase {
           datepickerWrapper.classList.add('out')
       }
       triggerEvent && this.triggerEvent('onhide', this._state.date1, this._state.date2)
+  }
+
+  protected ShowLoader() {
+    this._dom.loader.classList.add('visible')
+  }
+
+  protected HideLoader() {
+    this._dom.loader.classList.remove('visible')
   }
 
   protected async Show(triggerEvent = true) {
