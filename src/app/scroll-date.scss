@@ -451,6 +451,15 @@ $z-index-date-picker-title: 10001;
                     border-radius: 0px;
                 }
             }
+
+            &.has-data > div {
+                padding: 12px;
+            }
+
+            &.has-data > .dt {
+                transform: translateY(-7px);
+                font-size: 19px;
+            }
         }
 
         .weekdays {
@@ -514,5 +523,13 @@ $z-index-date-picker-title: 10001;
         }
     }
 
-
+    .date-data {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        margin-top: 14px;
+        font-size: 12px;
+        font-weight: 300;
+    }
 }

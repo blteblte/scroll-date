@@ -141,7 +141,7 @@ export interface IScrollDate {
    * Render provided strings or DOM nodes to the specified dates td
    * @param {IDateData} dateData dates data object array
    */
-  RenderDatesData(datesData: IDateData[]): Promise<void>
+  RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean): Promise<void>
 
   /**
    * Clear all previously rendered dates data

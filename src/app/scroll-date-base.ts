@@ -66,7 +66,7 @@ export class ScrollDateBase {
       listModePageIndex: null,
       onChangeDate1: null,
       onChangeDate2: null,
-      mappedData: []
+      firstDataSet: false
   }
 
   /**
@@ -304,16 +304,21 @@ export class ScrollDateBase {
   }
 
   protected SetFromDate(d: string | Date) {
-      if (typeof d === 'string' || d instanceof String) {
-          d = parseDate(d as string)
-          d.setHours(0, 0, 0, 0)
-      }
-      if (this._state.startDate > d) { return }
-      this._state.date1 = d
-      this.updateCalendarSelectFirstDate(d)
-      if (this.IsSingleDateMode() && this._state.isRendered) {
-          this.updateCalendarSelectSecondDate(d)
-          if (this._dom.selectedMonthRef) {
+    // if (d === null) {
+    //     this._state.date1 = null
+    //     this.updateCalendarSelectFirstDate(null)
+    // }
+
+    if (typeof d === 'string' || d instanceof String) {
+        d = parseDate(d as string)
+        d.setHours(0, 0, 0, 0)
+    }
+    if (this._state.startDate > d) { return }
+    this._state.date1 = d
+    this.updateCalendarSelectFirstDate(d)
+    if (this.IsSingleDateMode() && this._state.isRendered) {
+        this.updateCalendarSelectSecondDate(d)
+            if (this._dom.selectedMonthRef) {
             const monthRefOffset = this._dom.selectedMonthRef.offsetTop
             this._dom.datepickerContainer.scrollTop = monthRefOffset
 
@@ -321,12 +326,12 @@ export class ScrollDateBase {
                 this.SetListDatePageByDate(d)
             }
         }
-      }
-      this.apply(this._state.date1, this._state.date2)
-      this._state.selectingCount = 0
-      if (d > this._state.date2) {
-          this.SetToDate(d)
-      }
+    }
+    this.apply(this._state.date1, this._state.date2)
+    this._state.selectingCount = 0
+    if (d > this._state.date2) {
+        this.SetToDate(d)
+    }
   }
 
   protected SetToDate(d: string | Date) {
@@ -829,7 +834,7 @@ export class ScrollDateBase {
               if (!isFoundFirst) {
                   isFoundFirst = dt.ref.classList.contains('first')
               }
-              if (isFoundFirst && !isFoundSecond) {
+              if ((isFoundFirst && !isFoundSecond) && !dt.ref.classList.contains('invalid') && !dt.ref.classList.contains('has-data')) {
                   !dt.ref.classList.contains('connect') && dt.ref.classList.add('connect')
               } else {
                   dt.ref.classList.contains('connect') && dt.ref.classList.remove('connect')
@@ -924,17 +929,17 @@ export class ScrollDateBase {
       })
   }
 
-    protected async RenderDatesData(datesData: IDateData[]): Promise<void> {
+    protected async RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean): Promise<void> {
         return new Promise((resolve) => {
+            const firstDataSet = JSON.parse(JSON.stringify(this._state.firstDataSet))
+            this._state.firstDataSet = true
+
             setTimeout(() => {
-                const { _dom, _state } = this
+                const { _dom } = this
                 const { calendarDates } = _dom
 
-                this.ClearDatesData()
-
                 /* detach & normalize data */
-                const lastIndex = datesData.length - 1
-                datesData.forEach((obj, i) => {
+                const normalizedDatesData = datesData.map((obj) => {
 
                     let date = obj.date
                     if (typeof date === 'string' || date instanceof String) {
@@ -944,37 +949,79 @@ export class ScrollDateBase {
                         date.setHours(0, 0, 0, 0)
                     }
 
-                    const dataContainer = document.createElement('div')
-                    dataContainer.classList.add('date-data')
+                    const data = document.createElement('span')
+                    data.classList.add('date-data')
                     if (typeof obj.data === 'string' || obj.data instanceof String ) {
-                        dataContainer.innerHTML = obj.data as string
+                        data.innerHTML = obj.data as string
                     } else {
-                        dataContainer.appendChild(obj.data as HTMLElement)
+                        data.appendChild(obj.data as HTMLElement)
                     }
-                    const data = dataContainer
 
-                    const node = calendarDates.find(x => x.date === date)
+                    return { date, data }
+                })
 
-                    const dataDataNormalized = { date, data, node }
-                    dataDataNormalized.node.ref.appendChild(dataDataNormalized.data)
-                    dataDataNormalized.node.ref.classList.add('has-data')
+                const maxIndex = calendarDates.length - 1
+                for (let i = 0; i < calendarDates.length; i++) {
 
-                    _state.mappedData.push(dataDataNormalized)
+                    const dt = calendarDates[i]
 
-                    if (i === lastIndex) {
+                    if (firstDataSet === false) {
+                        console.log('FIRST DATA SET DT DATA')
+                        const originallyDisabled = dt.ref.classList.contains('invalid')
+                        dt.originallyDisabled = originallyDisabled
+                    }
+
+                    if (dt.data) {
+                        dt.ref.children[0].removeChild(dt.data)
+                        dt.data = null
+                        dt.ref.classList.remove('has-data')
+                    }
+
+                    if (!dt.originallyDisabled) {
+                        dt.ref.classList.remove('invalid')
+                        dt.ref.classList.remove('data-invalid')
+                    }
+
+                    const dateDate = normalizedDatesData.find(x => isDatesEqual(dt.date, x.date))
+                    if (!dateDate) {
+                        if (disableDatesWithoutData) {
+                            dt.ref.classList.add('invalid')
+                            dt.ref.classList.add('data-invalid')
+                        }
+                        continue;
+                    }
+
+                    dt.data = dateDate.data
+                    dt.ref.children[0].appendChild(dateDate.data)
+                    dt.ref.classList.add('has-data')
+
+                    if (i === maxIndex) {
+                        if (disableDatesWithoutData) {
+                            this.SetFromDate(null)
+                            this.SetToDate(null)
+                        }
                         resolve()
                     }
-                })
+                }
             }, 1);
         })
     }
 
     protected ClearDatesData(): void {
-        const { _state } = this
-        _state.mappedData.forEach((mappedData) => {
-            mappedData.node.ref.removeChild(mappedData.data)
-            mappedData.node.ref.classList.remove('has-data')
-        })
-        _state.mappedData = []
+        const { _dom } = this
+        const { calendarDates } = _dom
+        for (let i = 0; i < calendarDates.length; i++) {
+            const dt = calendarDates[i]
+            if (dt.data) {
+                dt.ref.children[0].removeChild(dt.data)
+                dt.data = null
+                dt.ref.classList.remove('has-data')
+            }
+
+            if (!dt.originallyDisabled) {
+                dt.ref.classList.remove('invalid')
+                dt.ref.classList.remove('data-invalid')
+            }
+        }
     }
 }

@@ -100,9 +100,9 @@ function calendar(month, y, lang, weekStartsWith: number): Promise<string> {
             var timestamp = +new Date(y, month, i);
 
             if (i == day && month == cmonth && y === realYear) {
-                padding += "<td data-timestamp='" + timestamp + "' class='currentday'><div>" + i + "</div></td>";
+                padding += "<td data-timestamp='" + timestamp + "' class='currentday'><div><span class='dt'>" + i + "</span></div></td>";
             } else {
-                padding += "<td data-timestamp='" + timestamp + "' class='currentmonth'><div>" + i + "</div></td>";
+                padding += "<td data-timestamp='" + timestamp + "' class='currentmonth'><div><span class='dt'>" + i + "</span></div></td>";
 
             }
 
