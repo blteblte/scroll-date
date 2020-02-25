@@ -79,12 +79,12 @@ export interface IScrollDate {
   /**
    * Hide datepicker
    */
-  Hide(): Promise<void>
+  Hide(triggerEvent?: boolean): Promise<void>
 
   /**
    * Show datepicker
    */
-  Show(): Promise<void>
+  Show(triggerEvent?: boolean): Promise<void>
 
   /**
    * Re-render and re-bind the datepicker
@@ -141,7 +141,7 @@ export interface IScrollDate {
    * Render provided strings or DOM nodes to the specified dates td
    * @param {IDateData} dateData dates data object array
    */
-  RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean): Promise<void>
+  RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean, deselectDates: boolean): Promise<void>
 
   /**
    * Clear all previously rendered dates data

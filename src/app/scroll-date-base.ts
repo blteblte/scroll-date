@@ -201,7 +201,9 @@ export class ScrollDateBase {
           this.triggerEvent('onfirstselected', dt.date)
       }
       this._firstSelectedDate = dt
-      this._dom.selectedMonthRef = dt.ref.parentElement/*tr*/.parentElement/*tbody*/.parentElement/*table*/
+      if (dt !== undefined && dt !== null) {
+          this._dom.selectedMonthRef = dt.ref.parentElement/*tr*/.parentElement/*tbody*/.parentElement/*table*/
+      }
       this.updateCalendarConnectDates()
   }
 
@@ -253,7 +255,7 @@ export class ScrollDateBase {
   protected FromDateNext() {
       const newDate = this.addDays(this._state.date1, +1)
       this.SetFromDate(newDate)
-      if (!this.IsSingleDateMode()) {
+      if (this.options.listMode) {
         this.SetListDatePageByDate(newDate)
       }
   }
@@ -261,7 +263,7 @@ export class ScrollDateBase {
   protected FromDatePrev() {
       const newDate = this.addDays(this._state.date1, -1)
       this.SetFromDate(newDate)
-      if (!this.IsSingleDateMode()) {
+      if (this.options.listMode) {
         this.SetListDatePageByDate(newDate)
       }
   }
@@ -269,7 +271,7 @@ export class ScrollDateBase {
   protected ToDateNext() {
       const newDate = this.addDays(this._state.date2, +1)
       this.SetToDate(newDate)
-      if (!this.IsSingleDateMode()) {
+      if (this.options.listMode) {
         this.SetListDatePageByDate(newDate)
       }
   }
@@ -277,7 +279,7 @@ export class ScrollDateBase {
   protected ToDatePrev() {
       const newDate = this.addDays(this._state.date2, -1)
       this.SetToDate(newDate)
-      if (!this.IsSingleDateMode()) {
+      if (this.options.listMode) {
         this.SetListDatePageByDate(newDate)
       }
   }
@@ -304,10 +306,12 @@ export class ScrollDateBase {
   }
 
   protected SetFromDate(d: string | Date) {
-    // if (d === null) {
-    //     this._state.date1 = null
-    //     this.updateCalendarSelectFirstDate(null)
-    // }
+    if (d === null) {
+        this._state.date1 = null
+        this.updateCalendarSelectFirstDate(null)
+        this.apply(this._state.date1, this._state.date2)
+        return
+    }
 
     if (typeof d === 'string' || d instanceof String) {
         d = parseDate(d as string)
@@ -335,6 +339,12 @@ export class ScrollDateBase {
   }
 
   protected SetToDate(d: string | Date) {
+      if (d === null) {
+        this._state.date2 = null
+        this.updateCalendarSelectSecondDate(null)
+        this.apply(this._state.date1, this._state.date2)
+        return
+      }
       if (typeof d === 'string' || d instanceof String) {
           d = parseDate(d as string)
           d.setHours(0, 0, 0, 0)
@@ -393,7 +403,7 @@ export class ScrollDateBase {
     document.addEventListener('click', outsideClickListener)
 }
 
-  protected async Hide() {
+  protected async Hide(triggerEvent = true) {
     if (this.options.inlineMode) { return }
       if (!this.Visible()) { return }
 
@@ -407,10 +417,10 @@ export class ScrollDateBase {
       if (!datepickerWrapper.classList.contains('out') && !this.Visible()) {
           datepickerWrapper.classList.add('out')
       }
-      this.triggerEvent('onhide', this._state.date1, this._state.date2)
+      triggerEvent && this.triggerEvent('onhide', this._state.date1, this._state.date2)
   }
 
-  protected async Show() {
+  protected async Show(triggerEvent = true) {
       if (this.options.inlineMode) { return }
       if (this.Visible()) { return }
 
@@ -434,7 +444,7 @@ export class ScrollDateBase {
 
       await this.wait(10)
       !datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.add('visible')
-      this.triggerEvent('onshow', this._state.date1, this._state.date2)
+      triggerEvent && this.triggerEvent('onshow', this._state.date1, this._state.date2)
   }
 
   protected async Render() {
@@ -512,6 +522,8 @@ export class ScrollDateBase {
   }
 
   protected SetListDatePageByDate(d: string | Date) {
+      if (d === null) { return }
+
       if (typeof d === 'string' || d instanceof String) {
           d = parseDate(d as string)
           d.setHours(0, 0, 0, 0)
@@ -746,6 +758,10 @@ export class ScrollDateBase {
   }
 
   private updateCalendarSelectFirstDate(d: Date) {
+      if (d === null) {
+        this.firstSelectedDate = null
+        return
+      }
       const dt = this._dom.calendarDates.find((x) => isDatesEqual(x.date, d))
       if (dt) {
           this.firstSelectedDate = dt
@@ -753,6 +769,10 @@ export class ScrollDateBase {
   }
 
   private updateCalendarSelectSecondDate(d: Date) {
+      if (d === null) {
+        this.secondSelectedDate = null
+        return
+      }
       const dt = this._dom.calendarDates.find((x) => isDatesEqual(x.date, d))
       if (dt) {
           this.secondSelectedDate = dt
@@ -781,6 +801,8 @@ export class ScrollDateBase {
   }
 
   private UI_unselectDate(dt: IDateItem, type: 'first' | 'second') {
+      if (dt === null) { return }
+
       if (type === 'first') {
           if (dt.ref.classList.contains('first') && !dt.ref.classList.contains('second')) {
               dt.ref.classList.contains('selected') && dt.ref.classList.remove('selected')
@@ -819,6 +841,15 @@ export class ScrollDateBase {
    * Draw/remove 'connect' class between selected dates
    */
   private updateCalendarConnectDates(toDateOverride: IDateItem = null) {
+
+      if (this.firstSelectedDate == null && this.secondSelectedDate == null) {
+        this._dom.calendarDates.forEach((dt) => {
+            if (dt.ref.classList.contains('connect')) {
+                dt.ref.classList.remove('connect')
+            }
+        })
+        return
+      }
 
       let isFoundFirst = false
       let isFoundSecond = false
@@ -929,7 +960,7 @@ export class ScrollDateBase {
       })
   }
 
-    protected async RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean): Promise<void> {
+    protected async RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean, deselectDates: boolean): Promise<void> {
         return new Promise((resolve) => {
             const firstDataSet = JSON.parse(JSON.stringify(this._state.firstDataSet))
             this._state.firstDataSet = true
@@ -960,13 +991,12 @@ export class ScrollDateBase {
                     return { date, data }
                 })
 
-                const maxIndex = calendarDates.length - 1
-                for (let i = 0; i < calendarDates.length; i++) {
+                let firstMappedDate: IDateItem = null
 
-                    const dt = calendarDates[i]
+                const maxIndex = calendarDates.length - 1
+                calendarDates.forEach((dt, i) => {
 
                     if (firstDataSet === false) {
-                        console.log('FIRST DATA SET DT DATA')
                         const originallyDisabled = dt.ref.classList.contains('invalid')
                         dt.originallyDisabled = originallyDisabled
                     }
@@ -988,23 +1018,46 @@ export class ScrollDateBase {
                             dt.ref.classList.add('invalid')
                             dt.ref.classList.add('data-invalid')
                         }
-                        continue;
+                        if (i === maxIndex) {
+                            this.onDatesDataResolve(deselectDates, disableDatesWithoutData, firstMappedDate)
+                            resolve()
+                        }
+                        return;
                     }
 
                     dt.data = dateDate.data
                     dt.ref.children[0].appendChild(dateDate.data)
                     dt.ref.classList.add('has-data')
 
+                    if (firstMappedDate === null) {
+                        firstMappedDate = dt
+                    }
+
                     if (i === maxIndex) {
-                        if (disableDatesWithoutData) {
-                            this.SetFromDate(null)
-                            this.SetToDate(null)
-                        }
+                        this.onDatesDataResolve(deselectDates, disableDatesWithoutData, firstMappedDate)
                         resolve()
                     }
-                }
+                })
             }, 1);
         })
+    }
+
+    private onDatesDataResolve(deselectDates: boolean, disableDatesWithoutData: boolean, firstMappedDate: IDateItem) {
+        if (deselectDates) {
+            this.SetFromDate(null)
+            this.SetToDate(null)
+        }
+
+        if (disableDatesWithoutData) {
+
+            const monthRef = firstMappedDate.ref.parentElement/*tr*/.parentElement/*tbody*/.parentElement/*table*/
+            const monthRefOffset = monthRef.offsetTop
+            this._dom.datepickerContainer.scrollTop = monthRefOffset
+
+            if (this.options.listMode) {
+                this.SetListDatePageByDate(firstMappedDate.date)
+            }
+        }
     }
 
     protected ClearDatesData(): void {

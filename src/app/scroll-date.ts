@@ -13,11 +13,11 @@ import { IDateData } from './models/IDateData';
  */
 export class ScrollDate extends ScrollDateBase implements IScrollDate {
 
-    RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean): Promise<void> {
-        return super.RenderDatesData(datesData, disableDatesWithoutData)
+    public RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean, deselectDates: boolean): Promise<void> {
+        return super.RenderDatesData(datesData, disableDatesWithoutData, deselectDates)
     }
 
-    ClearDatesData(): void {
+    public ClearDatesData(): void {
         super.ClearDatesData()
     }
 
@@ -133,15 +133,15 @@ export class ScrollDate extends ScrollDateBase implements IScrollDate {
     /**
      * Hide datepicker
      */
-    public async Hide() {
-        await super.Hide()
+    public async Hide(triggerEvent = true) {
+        await super.Hide(triggerEvent)
     }
 
     /**
      * Show datepicker
      */
-    public async Show() {
-        await super.Show()
+    public async Show(triggerEvent = true) {
+        await super.Show(triggerEvent)
     }
 
     /**

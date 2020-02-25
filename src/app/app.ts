@@ -1,6 +1,6 @@
 import './polyfills/_polyfills';
 import 'promise-polyfill/src/polyfill';
-import { ScrollDate } from './scroll-date';
+import { ScrollDate } from "./scroll-date";
 
 /* set global ref */
 (window as any).ScrollDate = ScrollDate

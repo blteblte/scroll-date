@@ -16,6 +16,7 @@ export function parseDate(dateStr: string) {
 }
 
 export function getDateISOFormat(date: Date): string {
+  if (date == null) { return '' }
   const dd = date.getDate()
   const mm = date.getMonth() + 1
   const yyyy = date.getFullYear()
@@ -58,6 +59,7 @@ export function camelCaseToDash(myStr) {
 }
 
 export function getDatePickerPlaceholderDate(date: Date) {
+    if (date === null) { return '' }
     const dd = date.getDate()
     const mm = date.getMonth() + 1
     const yyyy = date.getFullYear()
