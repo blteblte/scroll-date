@@ -957,6 +957,7 @@ export class ScrollDateBase {
   }
 
   private addDays(dt: Date, days: number) {
+      if (dt === null) { return dt }
       var date = new Date(dt.valueOf());
       date.setDate(date.getDate() + days);
       return date;
