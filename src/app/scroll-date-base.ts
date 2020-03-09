@@ -893,7 +893,7 @@ export class ScrollDateBase {
               if (!isFoundFirst) {
                   isFoundFirst = dt.ref.classList.contains('first')
               }
-              if ((isFoundFirst && !isFoundSecond) && !dt.ref.classList.contains('invalid') && !dt.ref.classList.contains('has-data')) {
+              if ((isFoundFirst && !isFoundSecond)) {
                   !dt.ref.classList.contains('connect') && dt.ref.classList.add('connect')
               } else {
                   dt.ref.classList.contains('connect') && dt.ref.classList.remove('connect')
