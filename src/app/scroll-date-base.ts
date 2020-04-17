@@ -700,6 +700,7 @@ export class ScrollDateBase {
       this._state.date2 = (this.secondSelectedDate || this.firstSelectedDate).date
       this.apply(this._state.date1, this._state.date2)
       this.Hide()
+      this.triggerEvent('onsubmit', this._state.date1, this._state.date2)
   }
 
   private async bind() {

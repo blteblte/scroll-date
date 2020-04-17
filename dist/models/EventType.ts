@@ -5,3 +5,4 @@ export type EventType =
   | 'onready'
   | 'onshow'
   | 'onhide'
+  | 'onsubmit'
