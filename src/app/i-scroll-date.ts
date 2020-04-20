@@ -48,23 +48,27 @@ export interface IScrollDate {
 
   /**
    * Increase from date by 1 day
+   * @param {boolean} dispatchEvent dispatch onfirstselected event (default true)
    */
-  FromDateNext(): void
+  FromDateNext(dispatchEvent?: boolean): void
 
   /**
    * Decrease from date by 1 day
+   * @param {boolean} dispatchEvent dispatch onfirstselected event (default true)
    */
-  FromDatePrev(): void
+  FromDatePrev(dispatchEvent?: boolean): void
 
   /**
    * Increase to date by 1 day
+   * @param {boolean} dispatchEvent dispatch onsecondselected event (default true)
    */
-  ToDateNext(): void
+  ToDateNext(dispatchEvent?: boolean): void
 
   /**
    * Decrease to date by 1 day
+   * @param {boolean} dispatchEvent dispatch onsecondselected event (default true)
    */
-  ToDatePrev(): void
+  ToDatePrev(dispatchEvent?: boolean): void
 
   /**
    * Returns if datepicker is visible (.visible && !.out)

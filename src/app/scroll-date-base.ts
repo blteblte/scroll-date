@@ -207,6 +207,7 @@ export class ScrollDateBase {
       this.triggerEvent('onready', this._state.date1, this._state.date2)
   }
 
+  private suspend_onfirstselected = false
 
   private _firstSelectedDate: IDateItem
   private get firstSelectedDate(): IDateItem {
@@ -218,7 +219,11 @@ export class ScrollDateBase {
       } else {
           this.UI_selectDate(dt, 'first')
           this._dom.uiFromDate.innerHTML = getDatePickerPlaceholderDate(dt.date)
-          this.triggerEvent('onfirstselected', dt.date)
+          if (!this.suspend_onfirstselected) {
+              this.triggerEvent('onfirstselected', dt.date)
+          } else {
+            this.suspend_onfirstselected = false
+          }
       }
       this._firstSelectedDate = dt
       if (dt !== undefined && dt !== null) {
@@ -226,6 +231,8 @@ export class ScrollDateBase {
       }
       this.updateCalendarConnectDates()
   }
+
+  private suspend_onsecondselected = false
 
   private _secondSelectedDate: IDateItem
   private get secondSelectedDate(): IDateItem {
@@ -245,7 +252,11 @@ export class ScrollDateBase {
                       && this._dom.datepickerSubmit.classList.remove('flash')
               }, 150)
           }
-          this.triggerEvent('onsecondselected', dt.date)
+          if (!this.suspend_onsecondselected) {
+              this.triggerEvent('onsecondselected', dt.date)
+          } else {
+              this.suspend_onsecondselected = false
+          }
       }
       this._secondSelectedDate = dt
       this.updateCalendarConnectDates()
@@ -272,7 +283,8 @@ export class ScrollDateBase {
       return this._state.startDate
   }
 
-  protected FromDateNext() {
+  protected FromDateNext(dispatchEvent = true) {
+      if (!dispatchEvent) { this.suspend_onfirstselected = true }
       const newDate = this.addDays(this._state.date1, +1)
       this.SetFromDate(newDate)
       if (this.options.listMode) {
@@ -280,7 +292,8 @@ export class ScrollDateBase {
       }
   }
 
-  protected FromDatePrev() {
+  protected FromDatePrev(dispatchEvent = true) {
+    if (!dispatchEvent) { this.suspend_onfirstselected = true }
       const newDate = this.addDays(this._state.date1, -1)
       this.SetFromDate(newDate)
       if (this.options.listMode) {
@@ -288,7 +301,8 @@ export class ScrollDateBase {
       }
   }
 
-  protected ToDateNext() {
+  protected ToDateNext(dispatchEvent = true) {
+    if (!dispatchEvent) { this.suspend_onsecondselected = true }
       const newDate = this.addDays(this._state.date2, +1)
       this.SetToDate(newDate)
       if (this.options.listMode) {
@@ -296,7 +310,8 @@ export class ScrollDateBase {
       }
   }
 
-  protected ToDatePrev() {
+  protected ToDatePrev(dispatchEvent = true) {
+    if (!dispatchEvent) { this.suspend_onsecondselected = true }
       const newDate = this.addDays(this._state.date2, -1)
       this.SetToDate(newDate)
       if (this.options.listMode) {

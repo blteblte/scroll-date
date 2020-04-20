@@ -99,29 +99,29 @@ export class ScrollDate extends ScrollDateBase implements IScrollDate {
     /**
      * Increase from date by 1 day
      */
-    public FromDateNext() {
-        super.FromDateNext()
+    public FromDateNext(dispatchEvent = true) {
+        super.FromDateNext(dispatchEvent)
     }
 
     /**
      * Decrease from date by 1 day
      */
-    public FromDatePrev() {
-        super.FromDatePrev()
+    public FromDatePrev(dispatchEvent = true) {
+        super.FromDatePrev(dispatchEvent)
     }
 
     /**
      * Increase to date by 1 day
      */
-    public ToDateNext() {
-        super.ToDateNext()
+    public ToDateNext(dispatchEvent = true) {
+        super.ToDateNext(dispatchEvent)
     }
 
     /**
      * Decrease to date by 1 day
      */
-    public ToDatePrev() {
-        super.ToDatePrev()
+    public ToDatePrev(dispatchEvent = true) {
+        super.ToDatePrev(dispatchEvent)
     }
 
     /**
