@@ -442,6 +442,8 @@ export class ScrollDateBase {
     if (this.options.inlineMode) { return }
       if (!this.Visible()) { return }
 
+      triggerEvent && this.triggerEvent('onbeforehide', this._state.date1, this._state.date2)
+
       const { datepickerWrapper } = this._dom
       datepickerWrapper.classList.contains('visible') && datepickerWrapper.classList.remove('visible')
       if (!this.options.listMode) {

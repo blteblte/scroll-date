@@ -1,8 +1,9 @@
 export type EventType =
-    'onchange'
+  'onchange'
   | 'onfirstselected'
   | 'onsecondselected'
   | 'onready'
   | 'onshow'
   | 'onhide'
+  | 'onbeforehide'
   | 'onsubmit'
