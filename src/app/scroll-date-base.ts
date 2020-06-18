@@ -345,6 +345,7 @@ export class ScrollDateBase {
         this._state.date1 = null
         this.updateCalendarSelectFirstDate(null)
         this.apply(this._state.date1, this._state.date2)
+        this._state.selectingCount = 0
         return
     }
 
@@ -378,6 +379,7 @@ export class ScrollDateBase {
         this._state.date2 = null
         this.updateCalendarSelectSecondDate(null)
         this.apply(this._state.date1, this._state.date2)
+        this._state.selectingCount = 0
         return
       }
       if (typeof d === 'string' || d instanceof String) {
