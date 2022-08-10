@@ -3,38 +3,7 @@ import { EventListenerType } from './models/EventListenerType';
 import { IDateData } from './models/IDateData';
 import { Options } from './models/Options';
 
-export declare class ScrollDate implements IScrollDate {
-  constructor(host: HTMLElement, userOptions?: Options, contextContainer?: Document | Element);
-  SetStartDate(d: string | Date): void;
-  GetStartDate(): string | Date;
-  ClearStartDate(): void;
-  Unbind(): void;
-  GetFromDate(): Date;
-  GetToDate(): Date;
-  SetFromDate(d: string | Date): void;
-  SetToDate(d: string | Date): void;
-  FromDateNext(dispatchEvent?: boolean): void;
-  FromDatePrev(dispatchEvent?: boolean): void;
-  ToDateNext(dispatchEvent?: boolean): void;
-  ToDatePrev(dispatchEvent?: boolean): void;
-  Visible(): boolean;
-  IsSingleDateMode(): boolean;
-  Hide(triggerEvent?: boolean): Promise<void>;
-  Show(triggerEvent?: boolean): Promise<void>;
-  Render(): Promise<void>;
-  NextPage(): void;
-  PrevPage(): void;
-  SetListDatePageByDate(d: string | Date): void;
-  SetListDatePageByIndex(index: number): void;
-  AddEventListener(eventType: EventType, eventListener: EventListenerType): void;
-  RemoveEventListener(eventType: EventType, eventListener: EventListenerType): void;
-  SetSingleDateMode(): void;
-  SetDateRangeMode(): void;
-  RenderDatesData(datesData: IDateData[], disableDatesWithoutData: boolean, deselectDates: boolean): Promise<void>;
-  ClearDatesData(): void;
-  ShowLoader(): void;
-  HideLoader(): void;
-}
+export declare function ScrollDate(host: HTMLElement, userOptions?: Options, contextContainer?: Document | Element): IScrollDate;
 
 export interface IScrollDate {
   /**
