@@ -31,7 +31,9 @@ module.exports = merge(common, {
       { from: './src/app/i-scroll-date.ts', to: 'i-scroll-date.ts' },
       { from: './src/app/models/EventType.ts', to: 'models/EventType.ts' },
       { from: './src/app/models/EventListenerType.ts', to: 'models/EventListenerType.ts' },
-      { from: './src/app/models/IDateData.ts', to: 'models/IDateData.ts' }
+      { from: './src/app/models/IDateData.ts', to: 'models/IDateData.ts' },
+      { from: './src/app/models/Options.ts', to: 'models/Options.ts' },
+      { from: './src/app/models/Translations.ts', to: 'models/Translations.ts' }
     ])
   ]
 });

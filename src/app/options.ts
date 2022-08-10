@@ -1,24 +1,5 @@
 import { parseDate } from './helpers';
-import { Translation } from './translations';
-
-export interface Options {
-  zeroDate: Date
-  startDate: Date
-  monthCount: number
-  rtl: boolean
-  from: HTMLInputElement | string
-  to: HTMLInputElement | string
-  lang: string
-  listMode: boolean | string
-  inOutTime: number
-  visibleByDefault: boolean
-  autoSubmit: boolean
-  translation: Translation
-  weekStartsWith: number
-  showOverflow: boolean
-  inlineMode: boolean
-  contextElement: HTMLElement | string
-}
+import { Options } from './models/Options';
 
 export const defaultOptions: Options = {
     zeroDate: new Date()

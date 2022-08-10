@@ -12,18 +12,20 @@ import {
   , getDateISOFormat
   , isDateObjectValid
 } from './helpers';
-import { Options, defaultOptions, parseOptions } from './options';
+import { defaultOptions, parseOptions } from './options';
 import { EventListenerType } from './models/EventListenerType';
 import { ScrollDateEvent } from './models/ScrollDateEvent';
 import { generateCalendarHTML } from './lib/generate';
 import { EventType } from './models/EventType';
 import { IDateItem } from './models/IDateItem';
-import { translations, Translation } from './translations';
+import { translations } from './translations';
 import { Targets } from './models/Targets';
 import { State } from './models/State';
 import { Dom } from './models/Dom';
 import { isFunction } from 'util';
 import { IDateData } from './models/IDateData';
+import { Translation } from './models/Translations';
+import { Options } from './models/Options';
 
 
 export class ScrollDateBase {
@@ -984,7 +986,7 @@ export class ScrollDateBase {
   }
 
   private wait(ms: number) {
-      return new Promise((resolve) => {
+      return new Promise<void>((resolve) => {
           setTimeout(() => resolve(), ms)
       })
   }

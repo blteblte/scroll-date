@@ -2,11 +2,11 @@
 import './scroll-date.scss';
 
 import { ScrollDateBase } from './scroll-date-base';
-import { Options } from './options';
 import { EventType } from './models/EventType';
 import { EventListenerType } from './models/EventListenerType';
 import { IScrollDate } from './i-scroll-date';
 import { IDateData } from './models/IDateData';
+import { Options } from './models/Options';
 
 /**
  * Scrollable datepicker
