@@ -1,9 +1,6 @@
 import { EventType } from './models/EventType';
 import { EventListenerType } from './models/EventListenerType';
 import { IDateData } from './models/IDateData';
-import { Options } from './models/Options';
-
-export declare function ScrollDate(host: HTMLElement, userOptions?: Options, contextContainer?: Document | Element): IScrollDate;
 
 export interface IScrollDate {
   /**
